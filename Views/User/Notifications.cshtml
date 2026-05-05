@@ -1,0 +1,158 @@
+@using WebApplication1.Models
+
+@{
+    ViewData["Title"] = "Thông báo";
+    var notifications = ViewBag.Notifications as List<Notification> ?? new List<Notification>();
+    var pageNum = ViewBag.PageNumber as int? ?? 1;
+    var totalPages = ViewBag.TotalPages as int? ?? 1;
+    var unreadCount = ViewBag.UnreadCount as int? ?? 0;
+}
+
+<div class="container py-4">
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>
+                    <i class="bi bi-bell"></i> Thông báo
+                    @if (unreadCount > 0)
+                    {
+                        <span class="badge bg-danger">@unreadCount</span>
+                    }
+                </h2>
+
+                @if (unreadCount > 0)
+                {
+                    <form method="post" action="@Url.Action("MarkAllNotificationsRead", "User")" style="display: inline;">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-check-all"></i> Đánh dấu tất cả đã đọc
+                        </button>
+                    </form>
+                }
+            </div>
+
+            @if (notifications.Any())
+            {
+                <div class="list-group">
+                    @foreach (var notification in notifications)
+                    {
+                        <div class="list-group-item @(notification.IsRead ? "" : "list-group-item-light")">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="flex-grow-1">
+                                    <div class="d-flex align-items-center mb-2">
+                                        @Html.Raw(GetNotificationIcon(notification))
+                                        <h6 class="mb-0 ms-2">@notification.Title</h6>
+                                        @if (!notification.IsRead)
+                                        {
+                                            <span class="badge bg-primary ms-2">Mới</span>
+                                        }
+                                    </div>
+
+                                    <p class="mb-2 text-muted">@notification.Message</p>
+
+                                    @if (!string.IsNullOrEmpty(notification.RelatedUserId) && notification.RelatedUser != null)
+                                    {
+                                        <small class="text-muted">
+                                            Từ: <a href="@Url.Action("Profile", "User", new { id = notification.RelatedUserId })">@notification.RelatedUser.DisplayName</a>
+                                        </small>
+                                    }
+
+                                    @if (notification.PostId.HasValue)
+                                    {
+                                        <small class="text-muted d-block">
+                                            <a href="@Url.Action("Details", "Post", new { id = notification.PostId })">
+                                                <i class="bi bi-arrow-right"></i> Xem bài viết
+                                            </a>
+                                        </small>
+                                    }
+
+                                    @if (notification.CommentId.HasValue && notification.Comment != null)
+                                    {
+                                        <small class="text-muted d-block">
+                                            <a href="@Url.Action("Details", "Post", new { id = notification.Comment.PostId })">
+                                                <i class="bi bi-arrow-right"></i> Xem bình luận
+                                            </a>
+                                        </small>
+                                    }
+
+                                    <small class="text-muted d-block mt-2">
+                                        <i class="bi bi-clock"></i>
+                                        @GetTimeAgo(notification.CreatedAt)
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <!-- Pagination -->
+                @if (totalPages > 1)
+                {
+                    <nav aria-label="Page navigation" class="mt-4">
+                        <ul class="pagination justify-content-center">
+                            @if (pageNum > 1)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" href="@Url.Action("Notifications", "User", new { page = pageNum - 1 })">
+                                        <i class="bi bi-chevron-left"></i> Trước
+                                    </a>
+                                </li>
+                            }
+
+                            @for (int i = 1; i <= totalPages; i++)
+                            {
+                                <li class="page-item @(i == pageNum ? "active" : "")">
+                                    <a class="page-link" href="@Url.Action("Notifications", "User", new { page = i })">@i</a>
+                                </li>
+                            }
+
+                            @if (pageNum < totalPages)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" href="@Url.Action("Notifications", "User", new { page = pageNum + 1 })">
+                                        Sau <i class="bi bi-chevron-right"></i>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </nav>
+                }
+            }
+            else
+            {
+                <div class="alert alert-info" role="alert">
+                    <i class="bi bi-info-circle"></i> Không có thông báo
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@functions {
+    private string GetNotificationIcon(Notification notification)
+    {
+        return notification.Type switch
+        {
+            NotificationType.PostReply => "<i class=\"bi bi-chat-square text-info\"></i>",
+            NotificationType.CommentReply => "<i class=\"bi bi-chat-dots text-info\"></i>",
+            NotificationType.PostLike => "<i class=\"bi bi-heart text-danger\"></i>",
+            NotificationType.CommentLike => "<i class=\"bi bi-heart text-danger\"></i>",
+            NotificationType.Mention => "<i class=\"bi bi-at text-warning\"></i>",
+            NotificationType.Follow => "<i class=\"bi bi-person-plus text-success\"></i>",
+            _ => "<i class=\"bi bi-bell text-secondary\"></i>"
+        };
+    }
+
+    private string GetTimeAgo(DateTime dateTime)
+    {
+        var timeSpan = DateTime.UtcNow - dateTime;
+        if (timeSpan.TotalMinutes < 1)
+            return "Vừa xong";
+        if (timeSpan.TotalHours < 1)
+            return ((int)timeSpan.TotalMinutes) + " phút trước";
+        if (timeSpan.TotalDays < 1)
+            return ((int)timeSpan.TotalHours) + " giờ trước";
+        return dateTime.ToString("dd/MM/yyyy HH:mm");
+    }
+}
+

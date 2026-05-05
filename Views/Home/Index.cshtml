@@ -1,0 +1,1059 @@
+﻿@model WebApplication1.ViewModels.HomeViewModel
+@{
+    ViewData["Title"] = "Trang Chủ - Diễn Đàn";
+    Layout = "_Layout";
+}
+
+<style>
+    /* vOz Style - Forum Layout */
+    .forum-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .forum-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 30px;
+        border-radius: 12px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    }
+
+    .forum-header h1 {
+        margin: 0;
+        font-size: 2.2rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .forum-header p {
+        margin: 10px 0 0 0;
+        opacity: 0.95;
+        font-size: 1.1rem;
+    }
+
+    /* Main Category Card */
+    .main-category-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        margin-bottom: 25px;
+        overflow: hidden;
+        border: 1px solid #e5e7eb;
+        transition: box-shadow 0.3s ease;
+    }
+
+    .main-category-card:hover {
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    }
+
+    .main-category-header {
+        background: linear-gradient(to right, #f8f9fa, #ffffff);
+        padding: 18px 25px;
+        border-bottom: 3px solid #667eea;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .main-category-header h2 {
+        margin: 0;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #1f2937;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .main-category-icon {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.2rem;
+        box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+    }
+
+    .category-order-badge {
+        background: #667eea;
+        color: white;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+    /* SubCategory Table */
+    .subcategory-table {
+        width: 100%;
+        margin: 0;
+    }
+
+    .subcategory-table thead {
+        background: #f9fafb;
+        border-bottom: 2px solid #e5e7eb;
+    }
+
+    .subcategory-table thead th {
+        padding: 15px 20px;
+        font-size: 0.875rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #6b7280;
+        letter-spacing: 0.5px;
+        border: none;
+    }
+
+    .subcategory-table tbody tr {
+        border-bottom: 1px solid #f3f4f6;
+        transition: background-color 0.2s ease;
+    }
+
+    .subcategory-table tbody tr:last-child {
+        border-bottom: none;
+    }
+
+    .subcategory-table tbody tr:hover {
+        background-color: #f9fafb;
+    }
+
+    .subcategory-table tbody td {
+        padding: 18px 20px;
+        vertical-align: middle;
+        border: none;
+    }
+
+    /* SubCategory Name Column */
+    .subcategory-name {
+        display: flex;
+        align-items: start;
+        gap: 15px;
+    }
+
+    .subcategory-icon {
+        font-size: 2rem;
+        min-width: 45px;
+        text-align: center;
+    }
+
+    .subcategory-info h5 {
+        margin: 0 0 6px 0;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #1f2937;
+    }
+
+    .subcategory-info h5 a {
+        color: #1f2937;
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+
+    .subcategory-info h5 a:hover {
+        color: #667eea;
+    }
+
+    .subcategory-description {
+        font-size: 0.875rem;
+        color: #6b7280;
+        margin: 0;
+        line-height: 1.5;
+    }
+
+    /* Stats Column */
+    .subcategory-stats {
+        text-align: center;
+        font-weight: 600;
+        color: #4b5563;
+    }
+
+    .post-count {
+        font-size: 1.3rem;
+        color: #667eea;
+        display: block;
+    }
+
+    .post-count-label {
+        font-size: 0.75rem;
+        color: #9ca3af;
+        font-weight: 500;
+        text-transform: uppercase;
+        margin-top: 4px;
+        display: block;
+    }
+
+    /* Latest Post Column */
+    .latest-post {
+        max-width: 350px;
+    }
+
+    .latest-post-title {
+        font-weight: 600;
+        color: #374151;
+        margin: 0 0 6px 0;
+        font-size: 0.95rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        line-height: 1.4;
+    }
+
+    .latest-post-title a {
+        color: #374151;
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+
+    .latest-post-title a:hover {
+        color: #667eea;
+    }
+
+    .latest-post-meta {
+        font-size: 0.8rem;
+        color: #9ca3af;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .latest-post-meta i {
+        margin-right: 4px;
+    }
+
+    .author-name {
+        color: #667eea;
+        font-weight: 500;
+    }
+
+    /* Empty State */
+    .no-posts {
+        text-align: center;
+        padding: 25px;
+        color: #9ca3af;
+        font-style: italic;
+        background: #f9fafb;
+    }
+
+    .no-subcategories {
+        text-align: center;
+        padding: 40px;
+        color: #9ca3af;
+    }
+
+    /* Responsive */
+    @@media (max-width: 992px) {
+        .subcategory-table thead th:nth-child(2),
+        .subcategory-table tbody td:nth-child(2) {
+            display: none;
+        }
+
+        .latest-post {
+            max-width: 250px;
+        }
+    }
+
+    @@media (max-width: 768px) {
+        .forum-header h1 {
+            font-size: 1.6rem;
+        }
+
+        .forum-header p {
+            font-size: 0.95rem;
+        }
+
+        .main-category-header h2 {
+            font-size: 1.2rem;
+        }
+
+        .subcategory-table thead {
+            display: none;
+        }
+
+        .subcategory-table tbody tr {
+            display: block;
+            margin-bottom: 15px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+        }
+
+        .subcategory-table tbody td {
+            display: block;
+            padding: 12px 15px;
+            text-align: left !important;
+        }
+
+        .subcategory-table tbody td:first-child {
+            background: #f9fafb;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .latest-post {
+            max-width: 100%;
+        }
+
+        .subcategory-stats {
+            text-align: left !important;
+        }
+    }
+
+    /* Loading Animation */
+    @@keyframes shimmer {
+        0% {
+            background-position: -1000px 0;
+        }
+        100% {
+            background-position: 1000px 0;
+        }
+    }
+
+    /* Search and Filter Section */
+    .search-filter-section {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        padding: 25px;
+        margin-bottom: 30px;
+        border: 1px solid #e5e7eb;
+    }
+
+    .search-form-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr auto;
+        gap: 15px;
+        align-items: end;
+    }
+
+    .search-form-grid .form-group {
+        margin-bottom: 0;
+    }
+
+    .form-control {
+        border-radius: 8px;
+        border: 1px solid #e5e7eb;
+        padding: 12px 16px;
+        font-size: 0.95rem;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        outline: none;
+    }
+
+    .btn-search {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+    }
+
+    .btn-search:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        color: white;
+        text-decoration: none;
+    }
+
+    .create-post-section {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .btn-create-post {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        color: white;
+        padding: 15px 30px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-create-post:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        color: white;
+        text-decoration: none;
+    }
+
+    /* Responsive for search form */
+    @@media (max-width: 1200px) {
+        .search-form-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .search-form-grid .form-group:nth-child(1) {
+            grid-column: 1 / -1;
+        }
+
+        .search-form-grid button {
+            grid-column: 1 / -1;
+            justify-self: center;
+        }
+    }
+
+    @@media (max-width: 768px) {
+        .search-form-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .search-filter-section {
+            padding: 20px;
+        }
+    }
+
+    /* Posts List Section */
+    .posts-list-section {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        margin-bottom: 30px;
+        overflow: hidden;
+        border: 1px solid #e5e7eb;
+    }
+
+    .subcategory-posts-header {
+        background: linear-gradient(to right, #f8f9fa, #ffffff);
+        padding: 25px;
+        border-bottom: 3px solid #667eea;
+    }
+
+    .subcategory-breadcrumb {
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.9rem;
+    }
+
+    .breadcrumb-link {
+        color: #667eea;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .breadcrumb-link:hover {
+        color: #5a67d8;
+        text-decoration: none;
+    }
+
+    .breadcrumb-separator {
+        color: #9ca3af;
+        font-size: 0.75rem;
+    }
+
+    .breadcrumb-main {
+        color: #6b7280;
+        font-weight: 500;
+    }
+
+    .breadcrumb-current {
+        color: #1f2937;
+        font-weight: 600;
+    }
+
+    .subcategory-info-header {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .subcategory-icon-large {
+        font-size: 3rem;
+        width: 70px;
+        height: 70px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    }
+
+    .subcategory-info-header h2 {
+        margin: 0 0 8px 0;
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #1f2937;
+    }
+
+    .subcategory-info-header p {
+        margin: 0;
+        color: #6b7280;
+        font-size: 1rem;
+    }
+
+    /* Posts Grid */
+    .posts-grid {
+        padding: 25px;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+        gap: 20px;
+    }
+
+    .post-card {
+        background: #fafafa;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        padding: 20px;
+        transition: all 0.3s ease;
+    }
+
+    .post-card:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px);
+    }
+
+    .post-header {
+        margin-bottom: 15px;
+    }
+
+    .post-title {
+        margin: 0 0 12px 0;
+        font-size: 1.2rem;
+        font-weight: 600;
+    }
+
+    .post-title a {
+        color: #1f2937;
+        text-decoration: none;
+        line-height: 1.4;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .post-title a:hover {
+        color: #667eea;
+    }
+
+    .post-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .post-author {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .author-avatar {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .author-avatar-placeholder {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: #667eea;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        font-size: 0.75rem;
+    }
+
+    .author-name {
+        font-weight: 500;
+        color: #374151;
+        font-size: 0.9rem;
+    }
+
+    .post-date {
+        font-size: 0.85rem;
+        color: #9ca3af;
+    }
+
+    .post-date i {
+        margin-right: 4px;
+    }
+
+    .post-content {
+        margin-bottom: 15px;
+    }
+
+    .post-content p {
+        color: #6b7280;
+        line-height: 1.5;
+        margin: 0;
+        font-size: 0.9rem;
+    }
+
+    .post-stats {
+        display: flex;
+        gap: 15px;
+        padding-top: 15px;
+        border-top: 1px solid #e5e7eb;
+    }
+
+    .stat-item {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 0.85rem;
+        color: #6b7280;
+    }
+
+    .stat-item i {
+        font-size: 0.8rem;
+    }
+
+    /* No posts message */
+    .no-posts-message {
+        text-align: center;
+        padding: 60px 25px;
+        color: #9ca3af;
+    }
+
+    .no-posts-message i {
+        font-size: 4rem;
+        margin-bottom: 20px;
+        opacity: 0.3;
+    }
+
+    .no-posts-message h3 {
+        color: #6b7280;
+        margin-bottom: 10px;
+    }
+
+    .no-posts-message p {
+        margin-bottom: 20px;
+    }
+
+    /* Responsive for posts */
+    @@media (max-width: 768px) {
+        .posts-grid {
+            grid-template-columns: 1fr;
+            padding: 20px;
+        }
+
+        .subcategory-info-header {
+            flex-direction: column;
+            text-align: center;
+            gap: 15px;
+        }
+
+        .subcategory-breadcrumb {
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .post-meta {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+</style>
+
+<div class="forum-container">
+    <!-- Forum Header -->
+    <div class="forum-header">
+        <h1>
+            <i class="fas fa-comments"></i>
+            Diễn Đàn Thảo Luận
+        </h1>
+        <p>Cộng đồng chia sẻ kiến thức và thảo luận về mọi chủ đề</p>
+    </div>
+
+    <!-- Search and Filter Section -->
+    <div class="search-filter-section">
+        <form method="get" asp-action="Index">
+            <div class="search-form-grid">
+                <div class="form-group">
+                    <input type="text" name="search" value="@ViewData["SearchTerm"]" 
+                           class="form-control" placeholder="Tìm kiếm bài viết..." />
+                </div>
+                <div class="form-group">
+                    <select name="mainCategoryId" class="form-control" id="mainCategorySelect">
+                        <option value="">Tất Cả Cụm Danh Mục</option>
+                        @foreach (var mainCategory in Model.MainCategories)
+                        {
+                            <option value="@mainCategory.Id" selected="@(ViewData["CurrentMainCategoryId"]?.ToString() == mainCategory.Id.ToString())">
+                                @mainCategory.Name
+                            </option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select name="subCategoryId" class="form-control" id="subCategorySelect">
+                        <option value="">Tất Cả Chuyên Mục</option>
+                        @if (ViewData["SubCategories"] is IEnumerable<WebApplication1.Models.SubCategory> subCategories)
+                        {
+                            @foreach (var subCategory in subCategories)
+                            {
+                                <option value="@subCategory.Id" 
+                                        data-main-category="@subCategory.MainCategoryId"
+                                        selected="@(ViewData["CurrentSubCategoryId"]?.ToString() == subCategory.Id.ToString())"
+                                        style="@(ViewData["CurrentMainCategoryId"] != null && ViewData["CurrentMainCategoryId"]?.ToString() != subCategory.MainCategoryId.ToString() ? "display: none;" : "")">
+                                    @subCategory.Name
+                                </option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select name="sortBy" class="form-control">
+                        <option value="recent" selected="@(ViewData["SortBy"]?.ToString() == "recent")">Mới Nhất</option>
+                        <option value="views" selected="@(ViewData["SortBy"]?.ToString() == "views")">Lượt Xem</option>
+                        <option value="interaction" selected="@(ViewData["SortBy"]?.ToString() == "interaction")">Tương Tác</option>
+                        <option value="length" selected="@(ViewData["SortBy"]?.ToString() == "length")">Độ Dài</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-search">
+                    <i class="fas fa-search"></i> Tìm Kiếm
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Create Post Button -->
+    @if (User.Identity!.IsAuthenticated)
+    {
+        <div class="create-post-section">
+            <a asp-controller="Post" asp-action="Create" class="btn btn-create-post">
+                <i class="fas fa-plus"></i> Tạo Bài Viết Mới
+            </a>
+        </div>
+    }
+
+    <!-- Posts List Section (when SubCategory is selected or search is performed) -->
+    @{
+        var showPostsList = false;
+        var posts = ViewData["Posts"] as IEnumerable<WebApplication1.Models.Post>;
+        var selectedSubCategory = ViewData["SelectedSubCategory"] as WebApplication1.Models.SubCategory;
+        if (selectedSubCategory != null || (posts != null && posts.Any()))
+        {
+            showPostsList = true;
+        }
+    }
+    @if (showPostsList)
+    {
+        <div class="posts-list-section">
+            <!-- SubCategory Header (only if subcategory is selected) -->
+            @if (selectedSubCategory != null)
+            {
+                <div class="subcategory-posts-header">
+                    <div class="subcategory-breadcrumb">
+                        <a asp-action="Index" class="breadcrumb-link">
+                            <i class="fas fa-home"></i> Trang Chủ
+                        </a>
+                        <i class="fas fa-chevron-right breadcrumb-separator"></i>
+                        <span class="breadcrumb-main">@selectedSubCategory.MainCategory.Name</span>
+                        <i class="fas fa-chevron-right breadcrumb-separator"></i>
+                        <span class="breadcrumb-current">@selectedSubCategory.Name</span>
+                    </div>
+                    <div class="subcategory-info-header">
+                        <div class="subcategory-icon-large">@selectedSubCategory.Icon</div>
+                        <div>
+                            <h2>@selectedSubCategory.Name</h2>
+                            <p>@selectedSubCategory.Description</p>
+                        </div>
+                    </div>
+                </div>
+            }
+            <!-- Posts Grid -->
+            @if (posts != null && posts.Any())
+            {
+                <div class="posts-grid">
+                    @foreach (var post in posts)
+                    {
+                        <div class="post-card">
+                            <div class="post-header">
+                                <h3 class="post-title">
+                                    <a asp-controller="Post" asp-action="Details" asp-route-id="@post.Id">
+                                        @post.Title
+                                    </a>
+                                </h3>
+                                <div class="post-meta">
+                                    <div class="post-author">
+                                        @if (!string.IsNullOrEmpty(post.User.Avatar))
+                                        {
+                                            <img src="@post.User.Avatar" alt="Avatar" class="author-avatar" />
+                                        }
+                                        else
+                                        {
+                                            <div class="author-avatar-placeholder">
+                                                @((post.User.DisplayName ?? post.User.UserName)?.Substring(0, 1).ToUpper())
+                                            </div>
+                                        }
+                                        <span class="author-name">@(post.User.DisplayName ?? post.User.UserName)</span>
+                                    </div>
+                                    <div class="post-date">
+                                        <i class="fas fa-clock"></i>
+                                        @post.CreatedAt.ToString("dd/MM/yyyy HH:mm")
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="post-content">
+                                @{
+                                    var contentPreview = post.Content.Length > 200 ? post.Content.Substring(0, 200) + "..." : post.Content;
+                                }
+                                <p>@Html.Raw(contentPreview.Replace("\n", "<br />"))</p>
+                            </div>
+                            <div class="post-stats">
+                                <div class="stat-item">
+                                    <i class="fas fa-eye"></i>
+                                    <span>@post.Views</span>
+                                </div>
+                                <div class="stat-item">
+                                    <i class="fas fa-heart"></i>
+                                    <span>@post.PostLikes.Count</span>
+                                </div>
+                                <div class="stat-item">
+                                    <i class="fas fa-comments"></i>
+                                    <span>@post.Comments.Count</span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="no-posts-message">
+                    <i class="fas fa-file-alt"></i>
+                    <h3>Không tìm thấy bài viết nào</h3>
+                    <p>Không có bài viết phù hợp với tìm kiếm hoặc chuyên mục này!</p>
+                    @if (User.Identity!.IsAuthenticated && selectedSubCategory != null)
+                    {
+                        <a asp-controller="Post" asp-action="Create" asp-route-subId="@selectedSubCategory.Id" class="btn btn-create-post">
+                            <i class="fas fa-plus"></i> Tạo Bài Viết Đầu Tiên
+                        </a>
+                    }
+                </div>
+            }
+        </div>
+    }
+
+    <!-- Main Categories (hidden when viewing SubCategory posts or search results) -->
+    @if (!showPostsList)
+    {
+        @if (ViewData["IsMockData"] as bool? == true)
+    {
+        <div class="alert alert-warning" role="alert" style="margin-bottom: 30px;">
+            <h4 class="alert-heading"><i class="fas fa-exclamation-triangle"></i> Dữ liệu mẫu (Mock Data)</h4>
+            <p>Bạn đang xem dữ liệu giả lập vì Database chưa được cập nhật. Để xem dữ liệu thật, vui lòng chạy lệnh sau trong Package Manager Console:</p>
+            <hr>
+            <p class="mb-0 font-monospace">Add-Migration Add_ThreeTierCategorySystem</p>
+            <p class="mb-0 font-monospace">Update-Database</p>
+        </div>
+    }
+
+    <!-- Main Categories -->
+    @if (Model.MainCategories != null && Model.MainCategories.Any())
+    {
+        foreach (var mainCategory in Model.MainCategories)
+        {
+            <div class="main-category-card">
+                <!-- Main Category Header -->
+                <div class="main-category-header">
+                    <div class="main-category-icon">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <h2>
+                        @mainCategory.Name
+                        <span class="category-order-badge">#@mainCategory.Order</span>
+                    </h2>
+                </div>
+
+                <!-- SubCategories Table -->
+                @if (mainCategory.SubCategories != null && mainCategory.SubCategories.Any())
+                {
+                    <table class="subcategory-table table mb-0">
+                        <thead>
+                            <tr>
+                                <th style="width: 50%;">Chuyên Mục</th>
+                                <th style="width: 15%; text-align: center;">Bài Viết</th>
+                                <th style="width: 35%;">Bài Viết Mới Nhất</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var subCategory in mainCategory.SubCategories)
+                            {
+                                <tr>
+                                    <!-- SubCategory Name & Description -->
+                                    <td>
+                                        <div class="subcategory-name">
+                                            <div class="subcategory-icon">
+                                                @if (!string.IsNullOrEmpty(subCategory.Icon))
+                                                {
+                                                    @subCategory.Icon
+                                                }
+                                                else
+                                                {
+                                                    <i class="fas fa-folder"></i>
+                                                }
+                                            </div>
+                                            <div class="subcategory-info">
+                                                <h5>
+                                                    <a href="@Url.Action("Index", "Home", new { subCategoryId = subCategory.Id })">
+                                                        @subCategory.Name
+                                                    </a>
+                                                </h5>
+                                                @if (!string.IsNullOrEmpty(subCategory.Description))
+                                                {
+                                                    <p class="subcategory-description">
+                                                        @subCategory.Description
+                                                    </p>
+                                                }
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <!-- Post Count -->
+                                    <td class="subcategory-stats">
+                                        <span class="post-count">@subCategory.PostCount</span>
+                                        <span class="post-count-label">bài viết</span>
+                                    </td>
+
+                                    <!-- Latest Post -->
+                                    <td>
+                                        @if (subCategory.LatestPost != null)
+                                        {
+                                            <div class="latest-post">
+                                                <div class="latest-post-title">
+                                                    <a href="/Post/Details/@subCategory.LatestPost.Id">
+                                                        @subCategory.LatestPost.Title
+                                                    </a>
+                                                </div>
+                                                <div class="latest-post-meta">
+                                                    <span>
+                                                        <i class="fas fa-user"></i>
+                                                        <span class="author-name">@subCategory.LatestPost.AuthorName</span>
+                                                    </span>
+                                                    <span>
+                                                        <i class="fas fa-clock"></i>
+                                                        @subCategory.LatestPost.CreatedAt.ToString("dd/MM/yyyy HH:mm")
+                                                    </span>
+                                                    <span>
+                                                        <i class="fas fa-eye"></i>
+                                                        @subCategory.LatestPost.Views lượt xem
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="no-posts">
+                                                <i class="fas fa-inbox"></i> Chưa có bài viết
+                                            </div>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <div class="no-subcategories">
+                        <i class="fas fa-folder-open" style="font-size: 3rem; opacity: 0.3; margin-bottom: 10px;"></i>
+                        <p>Chưa có chuyên mục nào trong danh mục này</p>
+                    </div>
+                }
+            </div>
+        }
+    }
+    else
+    {
+        <!-- Empty State -->
+        <div class="main-category-card">
+            <div class="no-subcategories" style="padding: 60px;">
+                <i class="fas fa-comments" style="font-size: 4rem; opacity: 0.2; margin-bottom: 20px;"></i>
+                <h3 style="color: #9ca3af; font-weight: 600;">Chưa có danh mục nào</h3>
+                <p style="color: #9ca3af;">Hệ thống đang được cập nhật. Vui lòng quay lại sau!</p>
+            </div>
+        </div>
+        }
+    }
+</div>
+
+@section Scripts {
+    <script>
+        // Add any interactive features here
+        console.log('vOz-style forum loaded successfully');
+        
+        // Smooth scroll to category
+        function scrollToCategory(categoryId) {
+            const element = document.getElementById('category-' + categoryId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // Optional: Add click tracking or analytics
+        document.querySelectorAll('.subcategory-info h5 a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const categoryName = this.textContent.trim();
+                console.log('Navigating to category:', categoryName);
+                // You can add analytics tracking here
+            });
+        });
+
+        // Cascading dropdown for MainCategory -> SubCategory
+        document.addEventListener('DOMContentLoaded', function() {
+            const mainCategorySelect = document.getElementById('mainCategorySelect');
+            const subCategorySelect = document.getElementById('subCategorySelect');
+            
+            if (mainCategorySelect && subCategorySelect) {
+                mainCategorySelect.addEventListener('change', function() {
+                    const selectedMainCategoryId = this.value;
+                    const subCategoryOptions = subCategorySelect.querySelectorAll('option');
+                    
+                    subCategoryOptions.forEach(function(option) {
+                        if (option.value === '') {
+                            // Always show "Tất Cả Chuyên Mục" option
+                            option.style.display = 'block';
+                        } else {
+                            const mainCategoryId = option.getAttribute('data-main-category');
+                            if (selectedMainCategoryId === '' || mainCategoryId === selectedMainCategoryId) {
+                                option.style.display = 'block';
+                            } else {
+                                option.style.display = 'none';
+                            }
+                        }
+                    });
+                    
+                    // Reset SubCategory selection if current selection is not visible
+                    if (subCategorySelect.value !== '') {
+                        const currentOption = subCategorySelect.querySelector(`option[value="${subCategorySelect.value}"]`);
+                        if (currentOption && currentOption.style.display === 'none') {
+                            subCategorySelect.value = '';
+                        }
+                    }
+                });
+                
+                // Trigger change event on page load to set initial state
+                mainCategorySelect.dispatchEvent(new Event('change'));
+            }
+        });
+    </script>
+}

@@ -1,0 +1,133 @@
+@model WebApplication1.ViewModels.EditCommentViewModel
+@{
+    ViewData["Title"] = "Edit Comment";
+}
+
+<div class="container" style="margin-top: 24px;">
+    <div style="max-width: 600px; margin: 0 auto;">
+        <div class="card">
+            <div class="card-header">
+                <h1 class="card-title">
+                    <i class="fas fa-edit"></i> Edit Comment
+                </h1>
+            </div>
+
+            <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                <input asp-for="Id" type="hidden" />
+                <input asp-for="PostId" type="hidden" />
+                
+                <div asp-validation-summary="ModelOnly" class="invalid-feedback" style="display: block;"></div>
+                
+                <div class="form-group">
+                    <label asp-for="Content" class="form-label">Comment</label>
+                    <textarea id="editCommentEditor" asp-for="Content" class="form-control tinymce-editor" rows="6"></textarea>
+                    <span asp-validation-for="Content" class="invalid-feedback"></span>
+                </div>
+                
+                <!-- Font Settings -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                    <div class="form-group">
+                        <label asp-for="FontFamily" class="form-label">Phông Chữ</label>
+                        <select asp-for="FontFamily" class="form-control">
+                            <option value="Arial">Arial</option>
+                            <option value="Times New Roman">Times New Roman</option>
+                            <option value="Courier New">Courier New</option>
+                            <option value="Georgia">Georgia</option>
+                            <option value="Verdana">Verdana</option>
+                            <option value="Comic Sans MS">Comic Sans MS</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="FontColor" class="form-label">Màu Chữ</label>
+                        <input asp-for="FontColor" type="color" class="form-control" />
+                    </div>
+                </div>
+                
+                <!-- Image Section -->
+                @if (!string.IsNullOrEmpty(Model.ImagePath))
+                {
+                    <div class="form-group">
+                        <label class="form-label">Ảnh Hiện Tại</label>
+                        <div style="margin-bottom: 12px;">
+                            <img src="@Model.ImagePath" alt="Current image" style="max-width: 200px; height: auto; border-radius: 8px;" />
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="DeleteImage" name="DeleteImage" />
+                            <label class="form-check-label" for="DeleteImage">
+                                Delete current image
+                            </label>
+                        </div>
+                    </div>
+                }
+                
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-image"></i> Tải ảnh mới
+                    </label>
+                    <input type="file" name="ImageFile" accept="image/*" class="form-control" />
+                    <small class="text-muted">JPG, PNG, GIF, WebP (Max 10MB)</small>
+                </div>
+                
+                <!-- Video Section -->
+                @if (!string.IsNullOrEmpty(Model.VideoPath))
+                {
+                    <div class="form-group">
+                        <label class="form-label">Video Hiện Tại</label>
+                        <div style="margin-bottom: 12px;">
+                            <video controls style="max-width: 100%; height: auto; border-radius: 8px; max-height: 300px;">
+                                <source src="@Model.VideoPath" type="video/mp4">
+                                <source src="@Model.VideoPath" type="video/webm">
+                                <source src="@Model.VideoPath" type="video/ogg">
+                                Trình duyệt của bạn không hỗ trợ video HTML5.
+                            </video>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="DeleteVideo" name="DeleteVideo" />
+                            <label class="form-check-label" for="DeleteVideo">
+                                Delete current video
+                            </label>
+                        </div>
+                    </div>
+                }
+                
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-video"></i> Tải video mới
+                    </label>
+                    <input type="file" name="VideoFile" accept="video/*" class="form-control" />
+                    <small class="text-muted">MP4, WebM, OGG (Max 100MB)</small>
+                </div>
+
+                <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 24px;">
+                    <a asp-controller="Post" asp-action="Details" asp-route-id="@Model.PostId" class="btn btn-outline">
+                        <i class="fas fa-times"></i> Cancel
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Update Comment
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/7/tinymce.min.js"></script>
+    
+    <script>
+        tinymce.init({
+            selector: '#editCommentEditor',
+            plugins: 'link image code lists formatting',
+            toolbar: 'undo redo | formatselect | bold italic underline | alignleft aligncenter alignright | bullist numlist | link image | code',
+            menubar: false,
+            height: 300,
+            setup: function(editor) {
+                editor.on('change', function() {
+                    editor.save();
+                });
+            }
+        });
+    </script>
+    
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

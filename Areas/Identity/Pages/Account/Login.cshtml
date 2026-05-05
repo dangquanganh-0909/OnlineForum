@@ -1,0 +1,155 @@
+@page
+@using WebApplication1.Areas.Identity.Pages.Account
+@model LoginModel
+@{
+    ViewData["Title"] = "Log in";
+}
+
+<div class="auth-wrapper">
+    <div class="auth-container-new">
+        <div class="auth-card-new">
+            <!-- Header Section -->
+            <div class="auth-header">
+                <div class="auth-logo">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <h1 class="auth-title-new">Welcome Back</h1>
+                <p class="auth-subtitle">Sign in to your Forum Discussion account</p>
+            </div>
+
+            <!-- Error Messages -->
+            @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span>@Model.ErrorMessage</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="fas fa-exclamation-circle"></i>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="account" method="post" class="auth-form">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />
+                <!-- Email Field -->
+                <div class="form-group-new">
+                    <label asp-for="Input.Email" class="form-label-new">
+                        <i class="fas fa-envelope"></i> Email Address
+                    </label>
+                    <input asp-for="Input.Email" 
+                           class="form-control-new" 
+                           autocomplete="username" 
+                           placeholder="you@example.com"
+                           required />
+                    <span asp-validation-for="Input.Email" class="form-error"></span>
+                </div>
+
+                <!-- Password Field -->
+                <div class="form-group-new">
+                    <label asp-for="Input.Password" class="form-label-new">
+                        <i class="fas fa-lock"></i> Password
+                    </label>
+                    <div class="password-input-wrapper">
+                        <input asp-for="Input.Password" 
+                               class="form-control-new" 
+                               autocomplete="current-password" 
+                               placeholder="Enter your password"
+                               id="passwordInput"
+                               required />
+                        <button type="button" class="password-toggle" onclick="togglePassword()">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <span asp-validation-for="Input.Password" class="form-error"></span>
+                </div>
+
+                <!-- Remember Me & Forgot Password -->
+                <div class="form-options">
+                    <div class="form-check-new">
+                        <input class="form-check-input-new" asp-for="Input.RememberMe" id="rememberMe" />
+                        <label class="form-check-label-new" for="rememberMe">
+                            Remember me for 30 days
+                        </label>
+                    </div>
+                    <a asp-page="./ForgotPassword" class="forgot-password-link">Forgot password?</a>
+                </div>
+
+                <!-- Submit Button -->
+                <button id="login-submit" type="submit" class="btn-submit-new">
+                    <i class="fas fa-sign-in-alt"></i> Sign In
+                </button>
+            </form>
+
+            <!-- Divider -->
+            <div class="auth-divider">
+                <span>Don't have an account?</span>
+            </div>
+
+            <!-- Register Link -->
+            <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="btn-register-new">
+                <i class="fas fa-user-plus"></i> Create New Account
+            </a>
+        </div>
+
+        <!-- Illustration Section -->
+        <div class="auth-illustration">
+            <div class="illustration-content">
+                <i class="fas fa-comments"></i>
+                <h2>Forum Discussion</h2>
+                <p>Join our community and share your thoughts with thousands of users worldwide.</p>
+                <div class="features-list">
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Share your ideas</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Connect with others</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Build your reputation</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        function togglePassword() {
+            const input = document.getElementById('passwordInput');
+            const button = document.querySelector('.password-toggle');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                button.innerHTML = '<i class="fas fa-eye-slash"></i>';
+            } else {
+                input.type = 'password';
+                button.innerHTML = '<i class="fas fa-eye"></i>';
+            }
+        }
+
+        // Add active class to form fields when they have focus or value
+        document.querySelectorAll('.form-control-new').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.classList.add('focused');
+            });
+            input.addEventListener('blur', function() {
+                if (!this.value) {
+                    this.parentElement.classList.remove('focused');
+                }
+            });
+            if (input.value) {
+                input.parentElement.classList.add('focused');
+            }
+        });
+    </script>
+}

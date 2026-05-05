@@ -1,0 +1,37 @@
+@{
+    ViewData["Title"] = "Localization Test";
+}
+
+<h1>Localization Test Results</h1>
+
+<div id="localizationResult">
+    <p>Loading...</p>
+</div>
+
+<script>
+fetch('/Debug/TestLocalizationJson')
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('localizationResult').innerHTML = `
+            <h3>Culture Information:</h3>
+            <ul>
+                <li><strong>Current Culture:</strong> ${data.currentCulture}</li>
+                <li><strong>Current UI Culture:</strong> ${data.currentUICulture}</li>
+                <li><strong>Request Culture Name:</strong> ${data.requestCultureName}</li>
+                <li><strong>Request UI Culture Name:</strong> ${data.requestUICultureName}</li>
+            </ul>
+            
+            <h3>Localization Test:</h3>
+            <ul>
+                <li><strong>Welcome Text:</strong> "${data.welcomeText}" (Resource Not Found: ${data.welcomeResourceNotFound})</li>
+                <li><strong>Forum Discussion Text:</strong> "${data.forumDiscussionText}" (Resource Not Found: ${data.forumResourceNotFound})</li>
+            </ul>
+            
+            <h3>Cookies:</h3>
+            <p>${data.cookies}</p>
+        `;
+    })
+    .catch(error => {
+        document.getElementById('localizationResult').innerHTML = `<p style="color: red;">Error: ${error}</p>`;
+    });
+</script>

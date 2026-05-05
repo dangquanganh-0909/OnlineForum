@@ -1,0 +1,429 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|c:\\users\\quanganh\\downloads\\webapplication1 (1) (1)\\views\\post\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|solutionrelative:views\\post\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|c:\\users\\quanganh\\downloads\\webapplication1 (1) (1)\\data\\dbinitializer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|solutionrelative:data\\dbinitializer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|c:\\users\\quanganh\\downloads\\webapplication1 (1) (1)\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|solutionrelative:models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|c:\\users\\quanganh\\downloads\\webapplication1 (1) (1)\\data\\forumdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|solutionrelative:data\\forumdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|c:\\users\\quanganh\\downloads\\webapplication1 (1) (1)\\views\\_viewimports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|solutionrelative:views\\_viewimports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|c:\\users\\quanganh\\downloads\\webapplication1 (1) (1)\\views\\shared\\_validationscriptspartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|solutionrelative:views\\shared\\_validationscriptspartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|c:\\users\\quanganh\\downloads\\webapplication1 (1) (1)\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|c:\\users\\quanganh\\downloads\\webapplication1 (1) (1)\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|c:\\users\\quanganh\\downloads\\webapplication1 (1) (1)\\views\\comment\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|solutionrelative:views\\comment\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|c:\\users\\quanganh\\downloads\\webapplication1 (1) (1)\\controllers\\debugcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|solutionrelative:controllers\\debugcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|c:\\users\\quanganh\\downloads\\webapplication1 (1) (1)\\areas\\identity\\pages\\account\\register.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|solutionrelative:areas\\identity\\pages\\account\\register.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|c:\\users\\quanganh\\downloads\\webapplication1 (1) (1)\\views\\welcome\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|solutionrelative:views\\welcome\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|c:\\users\\quanganh\\downloads\\webapplication1 (1) (1)\\views\\welcome\\test.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|solutionrelative:views\\welcome\\test.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|c:\\users\\quanganh\\downloads\\webapplication1 (1) (1)\\views\\_viewstart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|solutionrelative:views\\_viewstart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|c:\\users\\quanganh\\downloads\\webapplication1 (1) (1)\\views\\shared\\error.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|solutionrelative:views\\shared\\error.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|c:\\users\\quanganh\\downloads\\webapplication1 (1) (1)\\areas\\identity\\pages\\_viewstart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|solutionrelative:areas\\identity\\pages\\_viewstart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|c:\\users\\quanganh\\downloads\\webapplication1 (1) (1)\\areas\\identity\\pages\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|solutionrelative:areas\\identity\\pages\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|c:\\users\\quanganh\\downloads\\webapplication1 (1) (1)\\areas\\identity\\pages\\account\\login.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|solutionrelative:areas\\identity\\pages\\account\\login.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|c:\\users\\quanganh\\downloads\\webapplication1 (1) (1)\\areas\\identity\\pages\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|solutionrelative:areas\\identity\\pages\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|c:\\users\\quanganh\\downloads\\webapplication1 (1) (1)\\views\\authtest\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|solutionrelative:views\\authtest\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|c:\\users\\quanganh\\downloads\\webapplication1 (1) (1)\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|solutionrelative:views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|c:\\users\\quanganh\\downloads\\webapplication1 (1) (1)\\viewmodels\\createcommentviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|solutionrelative:viewmodels\\createcommentviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|c:\\users\\quanganh\\downloads\\webapplication1 (1) (1)\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|solutionrelative:wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|c:\\users\\quanganh\\downloads\\webapplication1 (1) (1)\\wwwroot\\css\\forum.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|solutionrelative:wwwroot\\css\\forum.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|c:\\users\\quanganh\\downloads\\webapplication1 (1) (1)\\controllers\\commentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{18463CF1-8CB1-45E6-AC6C-154351D7570D}|WebApplication1.csproj|solutionrelative:controllers\\commentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 100,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 97,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Details.cshtml",
+              "DocumentMoniker": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Views\\Post\\Details.cshtml",
+              "RelativeDocumentMoniker": "Views\\Post\\Details.cshtml",
+              "ToolTip": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Views\\Post\\Details.cshtml",
+              "RelativeToolTip": "Views\\Post\\Details.cshtml",
+              "ViewState": "AgIAADkCAAAAAAAAAAAAAFgCAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-23T07:15:05.47Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "DbInitializer.cs",
+              "DocumentMoniker": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Data\\DbInitializer.cs",
+              "RelativeDocumentMoniker": "Data\\DbInitializer.cs",
+              "ToolTip": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Data\\DbInitializer.cs",
+              "RelativeToolTip": "Data\\DbInitializer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-02T07:38:43.66Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Models\\User.cs",
+              "RelativeDocumentMoniker": "Models\\User.cs",
+              "ToolTip": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Models\\User.cs",
+              "RelativeToolTip": "Models\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-19T06:56:19.156Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Views\\Welcome\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Welcome\\Index.cshtml",
+              "ToolTip": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Views\\Welcome\\Index.cshtml",
+              "RelativeToolTip": "Views\\Welcome\\Index.cshtml",
+              "ViewState": "AgIAADIAAAAAAAAAAAAowFwAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-24T08:38:12.056Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Test.cshtml",
+              "DocumentMoniker": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Views\\Welcome\\Test.cshtml",
+              "RelativeDocumentMoniker": "Views\\Welcome\\Test.cshtml",
+              "ToolTip": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Views\\Welcome\\Test.cshtml",
+              "RelativeToolTip": "Views\\Welcome\\Test.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-24T08:38:05.626Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Error.cshtml",
+              "DocumentMoniker": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Views\\Shared\\Error.cshtml",
+              "RelativeDocumentMoniker": "Views\\Shared\\Error.cshtml",
+              "ToolTip": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Views\\Shared\\Error.cshtml",
+              "RelativeToolTip": "Views\\Shared\\Error.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-24T08:37:47.343Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "_ValidationScriptsPartial.cshtml",
+              "DocumentMoniker": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Views\\Shared\\_ValidationScriptsPartial.cshtml",
+              "RelativeDocumentMoniker": "Views\\Shared\\_ValidationScriptsPartial.cshtml",
+              "ToolTip": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Views\\Shared\\_ValidationScriptsPartial.cshtml",
+              "RelativeToolTip": "Views\\Shared\\_ValidationScriptsPartial.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-24T08:37:44.069Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-24T08:37:42.355Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "_ViewStart.cshtml",
+              "DocumentMoniker": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Areas\\Identity\\Pages\\_ViewStart.cshtml",
+              "RelativeDocumentMoniker": "Areas\\Identity\\Pages\\_ViewStart.cshtml",
+              "ToolTip": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Areas\\Identity\\Pages\\_ViewStart.cshtml",
+              "RelativeToolTip": "Areas\\Identity\\Pages\\_ViewStart.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-24T08:37:33.785Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Register.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Areas\\Identity\\Pages\\Account\\Register.cshtml.cs",
+              "RelativeDocumentMoniker": "Areas\\Identity\\Pages\\Account\\Register.cshtml.cs",
+              "ToolTip": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Areas\\Identity\\Pages\\Account\\Register.cshtml.cs",
+              "RelativeToolTip": "Areas\\Identity\\Pages\\Account\\Register.cshtml.cs",
+              "ViewState": "AgIAACQAAAAAAAAAAAAQwD4AAABOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-24T08:21:30.253Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Login.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Areas\\Identity\\Pages\\Account\\Login.cshtml.cs",
+              "RelativeDocumentMoniker": "Areas\\Identity\\Pages\\Account\\Login.cshtml.cs",
+              "ToolTip": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Areas\\Identity\\Pages\\Account\\Login.cshtml.cs",
+              "RelativeToolTip": "Areas\\Identity\\Pages\\Account\\Login.cshtml.cs",
+              "ViewState": "AgIAAD8AAAAAAAAAAAAswGcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-24T08:21:18.721Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAFYAAAAAAAAAAAAQwFsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-24T08:15:07.873Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Register.cshtml",
+              "DocumentMoniker": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Areas\\Identity\\Pages\\Account\\Register.cshtml",
+              "RelativeDocumentMoniker": "Areas\\Identity\\Pages\\Account\\Register.cshtml",
+              "ToolTip": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Areas\\Identity\\Pages\\Account\\Register.cshtml",
+              "RelativeToolTip": "Areas\\Identity\\Pages\\Account\\Register.cshtml",
+              "ViewState": "AgIAAIAAAAAAAAAAAAAowIwAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-24T08:12:00.313Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "Login.cshtml",
+              "DocumentMoniker": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Areas\\Identity\\Pages\\Account\\Login.cshtml",
+              "RelativeDocumentMoniker": "Areas\\Identity\\Pages\\Account\\Login.cshtml",
+              "ToolTip": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Areas\\Identity\\Pages\\Account\\Login.cshtml",
+              "RelativeToolTip": "Areas\\Identity\\Pages\\Account\\Login.cshtml",
+              "ViewState": "AgIAAHAAAAAAAAAAAAAowJoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-24T08:11:46.96Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Views\\AuthTest\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\AuthTest\\Index.cshtml",
+              "ToolTip": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Views\\AuthTest\\Index.cshtml",
+              "RelativeToolTip": "Views\\AuthTest\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-24T08:11:22.361Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Edit.cshtml",
+              "DocumentMoniker": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Views\\Comment\\Edit.cshtml",
+              "RelativeDocumentMoniker": "Views\\Comment\\Edit.cshtml",
+              "ToolTip": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Views\\Comment\\Edit.cshtml",
+              "RelativeToolTip": "Views\\Comment\\Edit.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-24T08:11:14.232Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "_ViewStart.cshtml",
+              "DocumentMoniker": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Views\\_ViewStart.cshtml",
+              "RelativeDocumentMoniker": "Views\\_ViewStart.cshtml",
+              "ToolTip": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Views\\_ViewStart.cshtml",
+              "RelativeToolTip": "Views\\_ViewStart.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-24T08:11:08.883Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "_ViewImports.cshtml",
+              "DocumentMoniker": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Views\\_ViewImports.cshtml",
+              "RelativeDocumentMoniker": "Views\\_ViewImports.cshtml",
+              "ToolTip": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Views\\_ViewImports.cshtml",
+              "RelativeToolTip": "Views\\_ViewImports.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-24T08:11:07.087Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\Index.cshtml",
+              "ToolTip": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-24T08:10:57.076Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "CreateCommentViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\ViewModels\\CreateCommentViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModels\\CreateCommentViewModel.cs",
+              "ToolTip": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\ViewModels\\CreateCommentViewModel.cs",
+              "RelativeToolTip": "ViewModels\\CreateCommentViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-21T08:39:01.711Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "site.css",
+              "DocumentMoniker": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\wwwroot\\css\\site.css",
+              "RelativeDocumentMoniker": "wwwroot\\css\\site.css",
+              "ToolTip": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\wwwroot\\css\\site.css",
+              "RelativeToolTip": "wwwroot\\css\\site.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-11-21T06:35:20.425Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "forum.css",
+              "DocumentMoniker": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\wwwroot\\css\\forum.css",
+              "RelativeDocumentMoniker": "wwwroot\\css\\forum.css",
+              "ToolTip": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\wwwroot\\css\\forum.css",
+              "RelativeToolTip": "wwwroot\\css\\forum.css",
+              "ViewState": "AgIAAC4AAAAAAAAAAABBwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-11-21T06:35:13.736Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ForumDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Data\\ForumDbContext.cs",
+              "RelativeDocumentMoniker": "Data\\ForumDbContext.cs",
+              "ToolTip": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Data\\ForumDbContext.cs",
+              "RelativeToolTip": "Data\\ForumDbContext.cs",
+              "ViewState": "AgIAADoAAAAAAAAAAABBwEQAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-21T06:35:01.5Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "DebugController.cs",
+              "DocumentMoniker": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Controllers\\DebugController.cs",
+              "RelativeDocumentMoniker": "Controllers\\DebugController.cs",
+              "ToolTip": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Controllers\\DebugController.cs",
+              "RelativeToolTip": "Controllers\\DebugController.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAABBwBEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-21T06:34:41.562Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "CommentController.cs",
+              "DocumentMoniker": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Controllers\\CommentController.cs",
+              "RelativeDocumentMoniker": "Controllers\\CommentController.cs",
+              "ToolTip": "C:\\Users\\QUANGANH\\Downloads\\WebApplication1 (1) (1)\\Controllers\\CommentController.cs",
+              "RelativeToolTip": "Controllers\\CommentController.cs",
+              "ViewState": "AgIAALkAAAAAAAAAAAAswAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-21T06:34:14.704Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

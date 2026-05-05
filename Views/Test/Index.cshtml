@@ -1,0 +1,125 @@
+@{
+    ViewData["Title"] = "Test Authentication";
+}
+
+<div class="container mt-4">
+    <h2>Test Đăng Ký / Đăng Nhập</h2>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Test Đăng Ký</h4>
+                </div>
+                <div class="card-body">
+                    <form id="testRegisterForm">
+                        <div class="mb-3">
+                            <label for="regEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="regEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="regUsername" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="regUsername" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="regPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="regPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Test Đăng Ký</button>
+                    </form>
+                    <div id="regResult" class="mt-3"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Test Đăng Nhập</h4>
+                </div>
+                <div class="card-body">
+                    <form id="testLoginForm">
+                        <div class="mb-3">
+                            <label for="loginEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="loginEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="loginPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="loginPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-success">Test Đăng Nhập</button>
+                    </form>
+                    <div id="loginResult" class="mt-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="mt-4">
+        <h4>Hướng dẫn:</h4>
+        <ul>
+            <li>Password phải có ít nhất 8 ký tự và chứa ít nhất 1 số</li>
+            <li>Username phải từ 3-50 ký tự</li>
+            <li>Email phải đúng định dạng</li>
+        </ul>
+    </div>
+</div>
+
+<script>
+document.getElementById('testRegisterForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const email = document.getElementById('regEmail').value;
+    const username = document.getElementById('regUsername').value;
+    const password = document.getElementById('regPassword').value;
+    
+    try {
+        const response = await fetch('/Test/TestRegister', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `email=${encodeURIComponent(email)}&username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`
+        });
+        
+        const result = await response.json();
+        const resultDiv = document.getElementById('regResult');
+        
+        if (result.success) {
+            resultDiv.innerHTML = `<div class="alert alert-success">${result.message}</div>`;
+        } else {
+            resultDiv.innerHTML = `<div class="alert alert-danger">${result.message}</div>`;
+        }
+    } catch (error) {
+        document.getElementById('regResult').innerHTML = `<div class="alert alert-danger">Lỗi: ${error.message}</div>`;
+    }
+});
+
+document.getElementById('testLoginForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+    
+    try {
+        const response = await fetch('/Test/TestLogin', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
+        });
+        
+        const result = await response.json();
+        const resultDiv = document.getElementById('loginResult');
+        
+        if (result.success) {
+            resultDiv.innerHTML = `<div class="alert alert-success">${result.message}</div>`;
+        } else {
+            resultDiv.innerHTML = `<div class="alert alert-danger">${result.message}</div>`;
+        }
+    } catch (error) {
+        document.getElementById('loginResult').innerHTML = `<div class="alert alert-danger">Lỗi: ${error.message}</div>`;
+    }
+});
+</script>

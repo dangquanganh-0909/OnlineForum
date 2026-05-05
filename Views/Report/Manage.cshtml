@@ -1,0 +1,171 @@
+@model IEnumerable<WebApplication1.Models.Report>
+@{
+    ViewData["Title"] = "Quản Lý Báo Cáo";
+}
+
+<div class="container" style="margin-top: 24px;">
+    <div class="card">
+        <div class="card-header">
+            <h1 class="card-title">
+                <i class="fas fa-flag"></i> Quản Lý Báo Cáo
+            </h1>
+            <p class="card-subtitle">Xem xét và quản lý các báo cáo của người dùng</p>
+        </div>
+
+        @if (Model.Any())
+        {
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="border-bottom: 2px solid var(--border-color);">
+                            <th style="padding: 12px; text-align: left;">Loại</th>
+                            <th style="padding: 12px; text-align: left;">Nội Dung</th>
+                            <th style="padding: 12px; text-align: left;">Lý Do</th>
+                            <th style="padding: 12px; text-align: left;">Người Báo Cáo</th>
+                            <th style="padding: 12px; text-align: left;">Ngày</th>
+                            <th style="padding: 12px; text-align: left;">Trạng Thái</th>
+                            <th style="padding: 12px; text-align: left;">Thao Tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var report in Model)
+                        {
+                            <tr style="border-bottom: 1px solid var(--border-color);">
+                                <td style="padding: 12px;">
+                                    @if (report.PostId.HasValue)
+                                    {
+                                        <span class="tag" style="background-color: var(--primary-color); color: white;">
+                                            <i class="fas fa-file-alt"></i> Post
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="tag" style="background-color: var(--secondary-color); color: white;">
+                                            <i class="fas fa-comment"></i> Comment
+                                        </span>
+                                    }
+                                </td>
+                                <td style="padding: 12px;">
+                                    @if (report.PostId.HasValue)
+                                    {
+                                        <div>
+                                            <strong>@report.Post!.Title</strong><br>
+                                            <small class="text-muted">by @(report.Post.User.DisplayName ?? report.Post.User.UserName)</small>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div>
+                                            <span>@(report.Comment!.Content.Length > 50 ? report.Comment.Content.Substring(0, 50) + "..." : report.Comment.Content)</span><br>
+                                            <small class="text-muted">by @(report.Comment.User.DisplayName ?? report.Comment.User.UserName)</small>
+                                        </div>
+                                    }
+                                </td>
+                                <td style="padding: 12px;">
+                                    <div>
+                                        <strong>@report.Reason</strong>
+                                        @if (!string.IsNullOrEmpty(report.Description))
+                                        {
+                                            <br><small class="text-muted">@report.Description</small>
+                                        }
+                                    </div>
+                                </td>
+                                <td style="padding: 12px;">
+                                    @(report.User.DisplayName ?? report.User.UserName)
+                                </td>
+                                <td style="padding: 12px;">
+                                    @report.CreatedAt.ToString("MMM dd, yyyy")
+                                </td>
+                                <td style="padding: 12px;">
+                                    <span class="tag @(report.Status switch 
+                                    {
+                                        WebApplication1.Models.ReportStatus.Pending => "style=\"background-color: var(--warning-color); color: white;\"",
+                                        WebApplication1.Models.ReportStatus.Reviewed => "style=\"background-color: var(--primary-color); color: white;\"",
+                                        WebApplication1.Models.ReportStatus.Resolved => "style=\"background-color: var(--secondary-color); color: white;\"",
+                                        _ => ""
+                                    })">
+                                        @report.Status
+                                    </span>
+                                </td>
+                                <td style="padding: 12px;">
+                                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                                        @if (report.PostId.HasValue)
+                                        {
+                                            <a asp-controller="Post" asp-action="Details" asp-route-id="@report.PostId" 
+                                               class="btn btn-outline btn-sm" target="_blank">
+                                                <i class="fas fa-external-link-alt"></i> View
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a asp-controller="Post" asp-action="Details" asp-route-id="@report.Comment!.PostId" 
+                                               class="btn btn-outline btn-sm" target="_blank">
+                                                <i class="fas fa-external-link-alt"></i> View
+                                            </a>
+                                        }
+                                        
+                                        @if (report.Status == WebApplication1.Models.ReportStatus.Pending)
+                                        {
+                                            <button onclick="updateStatus(@report.Id, @((int)WebApplication1.Models.ReportStatus.Reviewed))" 
+                                                    class="btn btn-primary btn-sm">
+                                                <i class="fas fa-eye"></i> Review
+                                            </button>
+                                            <button onclick="updateStatus(@report.Id, @((int)WebApplication1.Models.ReportStatus.Resolved))" 
+                                                    class="btn btn-secondary btn-sm">
+                                                <i class="fas fa-check"></i> Resolve
+                                            </button>
+                                        }
+                                        else if (report.Status == WebApplication1.Models.ReportStatus.Reviewed)
+                                        {
+                                            <button onclick="updateStatus(@report.Id, @((int)WebApplication1.Models.ReportStatus.Resolved))" 
+                                                    class="btn btn-secondary btn-sm">
+                                                <i class="fas fa-check"></i> Resolve
+                                            </button>
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="text-center" style="padding: 48px;">
+                <i class="fas fa-shield-alt" style="font-size: 4rem; color: var(--text-muted); margin-bottom: 16px;"></i>
+                <h3>No reports</h3>
+                <p class="text-muted">No reports have been submitted yet.</p>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function updateStatus(reportId, status) {
+            $.post('/Report/UpdateStatus/' + reportId, { status: status }, function(data) {
+                if (data.success) {
+                    location.reload();
+                }
+            });
+        }
+    </script>
+    
+    <style>
+        table {
+            font-size: 0.875rem;
+        }
+        
+        @@media (max-width: 768px) {
+            table {
+                font-size: 0.75rem;
+            }
+            
+            .btn-sm {
+                padding: 2px 6px;
+                font-size: 0.625rem;
+            }
+        }
+    </style>
+}

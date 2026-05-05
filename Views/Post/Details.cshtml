@@ -1,0 +1,751 @@
+@model WebApplication1.Models.Post
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="container" style="margin-top: 24px;">
+    <div style="display: grid; grid-template-columns: 1fr 300px; gap: 24px;">
+        <!-- Main Content -->
+        <div>
+            <!-- Post Content -->
+            <article class="card">
+                <div class="card-header">
+                    <h1 class="card-title">@Model.Title</h1>
+                    <div class="post-meta">
+                        <span class="tag category" style="background-color: @Model.Category.Color;">
+                            @Model.Category.Name
+                        </span>
+                        <span style="display: flex; align-items: center; gap: 8px;">
+                            @if (!string.IsNullOrEmpty(Model.User.Avatar))
+                            {
+                                <img src="@Model.User.Avatar" alt="Avatar" style="width: 24px; height: 24px; border-radius: 50%; object-fit: cover;" />
+                            }
+                            else
+                            {
+                                <div style="width: 24px; height: 24px; border-radius: 50%; background-color: var(--primary-color); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 0.75rem;">
+                                    @((Model.User.DisplayName ?? Model.User.UserName)?.Substring(0, 1).ToUpper())
+                                </div>
+                            }
+                            <a asp-controller="User" asp-action="Profile" asp-route-id="@Model.UserId">
+                                @(Model.User.DisplayName ?? Model.User.UserName)
+                            </a>
+                        </span>
+                        <span>
+                            <i class="fas fa-clock"></i>
+                            @Model.CreatedAt.ToString("MMM dd, yyyy 'at' HH:mm")
+                        </span>
+                        @if (Model.UpdatedAt.HasValue)
+                        {
+                            <span class="text-muted">
+                                <i class="fas fa-edit"></i> Updated @Model.UpdatedAt.Value.ToString("MMM dd, yyyy 'at' HH:mm")
+                            </span>
+                        }
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 24px;">
+                    @Html.Raw(Model.Content.Replace("\n", "<br>"))
+                </div>
+
+                <!-- AI Features Info -->
+                @if (Model.IsSummarized || Model.IsSpellChecked || Model.IsDuplicateChecked)
+                {
+                    <div style="background: linear-gradient(135deg, #f3f4f6 0%, #fffbeb 100%); padding: 20px; border-radius: 8px; margin-bottom: 24px; border-left: 4px solid #f59e0b; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                        <h6 style="margin-bottom: 15px; color: #d97706; font-size: 1rem; font-weight: 700; letter-spacing: 0.3px;">
+                            <i class="fas fa-sparkles"></i> Thông Tin Xử Lý AI
+                        </h6>
+
+                        @if (Model.IsSummarized && !string.IsNullOrEmpty(Model.Summary))
+                        {
+                            <div style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #fcd34d;">
+                                <div style="font-weight: 700; color: #b45309; margin-bottom: 8px; font-size: 0.95rem;">
+                                    <i class="fas fa-compress" style="margin-right: 6px;"></i>Tóm Tắt:
+                                </div>
+                                <p style="margin: 0; color: #5a5a5a; line-height: 1.6; font-size: 0.95rem; font-style: italic;">
+                                    @Html.Raw(System.Net.WebUtility.HtmlEncode(Model.Summary))
+                                </p>
+                            </div>
+                        }
+
+                        @if (Model.IsSpellChecked && !string.IsNullOrEmpty(Model.CorrectedContent))
+                        {
+                            <div style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #fcd34d;">
+                                <div style="font-weight: 700; color: #b45309; margin-bottom: 8px; font-size: 0.95rem;">
+                                    <i class="fas fa-check-circle" style="margin-right: 6px; color: #10b981;"></i>Nội Dung Đã Sửa:
+                                </div>
+                                <p style="margin: 0; color: #5a5a5a; line-height: 1.6; font-size: 0.95rem; background: #fafafa; padding: 10px; border-radius: 4px;">
+                                    @Html.Raw(System.Net.WebUtility.HtmlEncode(Model.CorrectedContent))
+                                </p>
+                            </div>
+                        }
+
+                        @if (Model.IsDuplicateChecked)
+                        {
+                            <div>
+                                @if (Model.IsPotentialDuplicate && Model.SimilarPostId.HasValue)
+                                {
+                                    <div style="font-weight: 700; color: #dc2626; margin-bottom: 8px; font-size: 0.95rem;">
+                                        <i class="fas fa-exclamation-triangle" style="margin-right: 6px;"></i>Cảnh Báo:
+                                    </div>
+                                    <p style="margin: 0; color: #dc2626; line-height: 1.6; font-size: 0.95rem;">
+                                        Bài viết này có độ tương đồng 
+                                        <strong style="font-weight: 700;">@(Math.Round(Model.DuplicateSimilarityScore * 100, 1))%</strong> 
+                                        với <a asp-action="Details" asp-route-id="@Model.SimilarPostId" style="color: #dc2626; font-weight: 700; text-decoration: underline;">bài viết khác</a>
+                                    </p>
+                                }
+                                else if (Model.IsDuplicateChecked)
+                                {
+                                    <div style="font-weight: 700; color: #10b981; margin-bottom: 8px; font-size: 0.95rem;">
+                                        <i class="fas fa-check-circle" style="margin-right: 6px;"></i>Kiểm Tra Xong:
+                                    </div>
+                                    <p style="margin: 0; color: #5a5a5a; line-height: 1.6; font-size: 0.95rem;">
+                                        Độ tương đồng với các bài khác: 
+                                        <strong style="color: #10b981; font-weight: 700;">@(Math.Round(Model.DuplicateSimilarityScore * 100, 1))%</strong> 
+                                        <span style="color: #10b981; font-weight: 700;">(An toàn)</span>
+                                    </p>
+                                }
+                            </div>
+                        }
+                    </div>
+                }
+
+                @* Display Image if exists *@
+                @if (!string.IsNullOrEmpty(Model.ImagePath))
+                {
+                    <div style="margin-bottom: 24px; text-align: center;">
+                        <img src="@Model.ImagePath" alt="Ảnh bài viết" 
+                             style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: var(--shadow);" 
+                             onclick="openImageModal('@Model.ImagePath')" />
+                    </div>
+                }
+
+                @* Display Video if exists *@
+                @if (!string.IsNullOrEmpty(Model.VideoPath))
+                {
+                    <div style="margin-bottom: 24px; text-align: center;">
+                        <video controls style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: var(--shadow);">
+                            <source src="@Model.VideoPath" type="video/mp4">
+                            <source src="@Model.VideoPath" type="video/webm">
+                            <source src="@Model.VideoPath" type="video/ogg">
+                            Trình duyệt của bạn không hỗ trợ video HTML5.
+                        </video>
+                    </div>
+                }
+
+                @if (Model.PostTags.Any())
+                {
+                    <div style="margin-bottom: 24px;">
+                        <strong>Tags:</strong>
+                        @foreach (var postTag in Model.PostTags)
+                        {
+                            <span class="tag">@postTag.Tag.Name</span>
+                        }
+                    </div>
+                }
+
+                <div class="post-stats">
+                    <div class="stat-item">
+                        <i class="fas fa-eye"></i>
+                        <span>@Model.Views views</span>
+                    </div>
+                    <div class="stat-item">
+                        @if (User.Identity!.IsAuthenticated)
+                        {
+                            <button id="post-like-@Model.Id" onclick="toggleLike('Post', @Model.Id)" 
+                                    class="btn btn-outline btn-sm @(Model.PostLikes.Any(pl => pl.UserId == ViewContext.HttpContext.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value) ? "liked" : "")">
+                                <i class="@(Model.PostLikes.Any(pl => pl.UserId == ViewContext.HttpContext.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value) ? "fas" : "far") fa-heart"></i>
+                                <span class="like-count">@Model.PostLikes.Count</span>
+                            </button>
+                        }
+                        else
+                        {
+                            <button onclick="window.location.href='@Url.Action("Login", "SimpleAuth", new { returnUrl = Context.Request.Path })'" 
+                                    class="btn btn-outline btn-sm">
+                                <i class="far fa-heart"></i>
+                                <span class="like-count">@Model.PostLikes.Count</span>
+                            </button>
+                        }
+                    </div>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        @if (Model.UserId == ViewContext.HttpContext.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value || User.IsInRole("Admin") || User.IsInRole("Moderator"))
+                        {
+                            <div class="stat-item">
+                                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline btn-sm">
+                                    <i class="fas fa-edit"></i> Chỉnh Sửa
+                                </a>
+                            </div>
+                            <div class="stat-item">
+                                <form asp-action="Delete" asp-route-id="@Model.Id" method="post" style="display: inline;" 
+                                      onsubmit="return confirm('Bạn có chắc chắn muốn xóa bài viết này?')">
+                                    <button type="submit" class="btn btn-outline btn-sm" style="color: var(--danger-color); border-color: var(--danger-color);">
+                                        <i class="fas fa-trash"></i> Xóa
+                                    </button>
+                                </form>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="stat-item">
+                                <button onclick="showReportModal('post', @Model.Id)" class="btn btn-outline btn-sm">
+                                    <i class="fas fa-flag"></i> Report
+                                </button>
+                            </div>
+                        }
+                    }
+                </div>
+            </article>
+
+            <!-- Comments Section -->
+            <div class="comment-section">
+                <h3>Bình Luận (@Model.Comments.Count(c => !c.IsDeleted))</h3>
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <!-- Add Comment Form -->
+                    <div class="card" style="margin-bottom: 24px;">
+                        <form asp-controller="Comment" asp-action="Create" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="PostId" value="@Model.Id" />
+                            <div class="form-group">
+                                <label class="form-label">Thêm bình luận</label>
+                                <textarea id="commentEditor" name="Content" class="form-control tinymce-editor" required></textarea>
+                            </div>
+                            
+                            <!-- File Uploads -->
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        <i class="fas fa-image"></i> Tải ảnh lên
+                                    </label>
+                                    <input type="file" name="ImageFile" accept="image/*" class="form-control" />
+                                    <small class="text-muted">JPG, PNG, GIF, WebP (Max 10MB)</small>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        <i class="fas fa-video"></i> Tải video lên
+                                    </label>
+                                    <input type="file" name="VideoFile" accept="video/*" class="form-control" />
+                                    <small class="text-muted">MP4, WebM, OGG (Max 100MB)</small>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-comment"></i> Đăng Bình Luận
+                            </button>
+                        </form>
+                    </div>
+                }
+                else
+                {
+                    <!-- Login Required Form -->
+                    <div class="card" style="margin-bottom: 24px;">
+                        <div class="form-group">
+                            <label class="form-label">Thêm bình luận</label>
+                            <textarea class="form-control" rows="3" placeholder="Đăng nhập để bình luận..." readonly></textarea>
+                        </div>
+                        <button onclick="window.location.href='@Url.Action("Login", "SimpleAuth", new { returnUrl = Context.Request.Path })'" class="btn btn-primary">
+                            <i class="fas fa-sign-in-alt"></i> Đăng Nhập để Bình Luận
+                        </button>
+                    </div>
+                }
+
+                <!-- Comments List -->
+                @foreach (var comment in Model.Comments.Where(c => !c.IsDeleted && c.ParentCommentId == null).OrderBy(c => c.CreatedAt))
+                {
+                    <div class="comment">
+                        <div class="comment-header">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                @if (!string.IsNullOrEmpty(comment.User.Avatar))
+                                {
+                                    <img src="@comment.User.Avatar" alt="Avatar" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover;" />
+                                }
+                                else
+                                {
+                                    <div style="width: 32px; height: 32px; border-radius: 50%; background-color: var(--primary-color); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 0.875rem;">
+                                        @((comment.User.DisplayName ?? comment.User.UserName)?.Substring(0, 1).ToUpper())
+                                    </div>
+                                }
+                                <div>
+                                    <span class="comment-author">
+                                        <a asp-controller="User" asp-action="Profile" asp-route-id="@comment.UserId">
+                                            @(comment.User.DisplayName ?? comment.User.UserName)
+                                        </a>
+                                    </span>
+                                    <span class="comment-date">@comment.CreatedAt.ToString("MMM dd, yyyy 'at' HH:mm")</span>
+                                    @if (comment.UpdatedAt.HasValue)
+                                    {
+                                        <span class="comment-date">(edited)</span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-bottom: 12px;">
+                            @Html.Raw(comment.Content.Replace("\n", "<br>"))
+                        </div>
+                        
+                        @* Display Image if exists *@
+                        @if (!string.IsNullOrEmpty(comment.ImagePath))
+                        {
+                            <div style="margin-bottom: 12px; text-align: center;">
+                                <img src="@comment.ImagePath" alt="Ảnh bình luận" 
+                                     style="max-width: 100%; height: auto; border-radius: 8px; max-height: 400px; cursor: pointer;"
+                                     onclick="openImageModal('@comment.ImagePath')" />
+                            </div>
+                        }
+                        
+                        @* Display Video if exists *@
+                        @if (!string.IsNullOrEmpty(comment.VideoPath))
+                        {
+                            <div style="margin-bottom: 12px; text-align: center;">
+                                <video controls style="max-width: 100%; height: auto; border-radius: 8px; max-height: 400px;">
+                                    <source src="@comment.VideoPath" type="video/mp4">
+                                    <source src="@comment.VideoPath" type="video/webm">
+                                    <source src="@comment.VideoPath" type="video/ogg">
+                                    Trình duyệt của bạn không hỗ trợ video HTML5.
+                                </video>
+                            </div>
+                        }
+
+                        <div class="comment-actions">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <button id="comment-like-@comment.Id" onclick="toggleLike('Comment', @comment.Id)" 
+                                        class="btn btn-outline btn-sm @(comment.CommentLikes.Any(cl => cl.UserId == ViewContext.HttpContext.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value) ? "liked" : "")">
+                                    <i class="@(comment.CommentLikes.Any(cl => cl.UserId == ViewContext.HttpContext.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value) ? "fas" : "far") fa-heart"></i>
+                                    <span class="like-count">@comment.CommentLikes.Count</span>
+                                </button>
+                                
+                                <button onclick="showReplyForm(@comment.Id)" class="btn btn-outline btn-sm">
+                                    <i class="fas fa-reply"></i> Trả lời
+                                </button>
+                            }
+                            else
+                            {
+                                <button onclick="window.location.href='@Url.Action("Login", "SimpleAuth", new { returnUrl = Context.Request.Path })'" 
+                                        class="btn btn-outline btn-sm">
+                                    <i class="far fa-heart"></i>
+                                    <span class="like-count">@comment.CommentLikes.Count</span>
+                                </button>
+                                
+                                <button onclick="window.location.href='@Url.Action("Login", "SimpleAuth", new { returnUrl = Context.Request.Path })'" 
+                                        class="btn btn-outline btn-sm">
+                                    <i class="fas fa-reply"></i> Trả lời
+                                </button>
+                            }
+
+                            @if (User.Identity.IsAuthenticated && (comment.UserId == ViewContext.HttpContext.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value || User.IsInRole("Admin") || User.IsInRole("Moderator")))
+                            {
+                                <a asp-controller="Comment" asp-action="Edit" asp-route-id="@comment.Id" class="btn btn-outline btn-sm">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                                
+                                <form asp-controller="Comment" asp-action="Delete" asp-route-id="@comment.Id" method="post" style="display: inline;" 
+                                      onsubmit="return confirm('Are you sure you want to delete this comment?')">
+                                    <button type="submit" class="btn btn-outline btn-sm" style="color: var(--danger-color); border-color: var(--danger-color);">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </button>
+                                </form>
+                            }
+                        </div>
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <!-- Reply Form -->
+                            <div id="reply-form-@comment.Id" style="display: none; margin-top: 16px; padding: 16px; background-color: var(--background-color); border-radius: 8px;">
+                                <form asp-controller="Comment" asp-action="Create" method="post" enctype="multipart/form-data">
+                                    <input type="hidden" name="PostId" value="@Model.Id" />
+                                    <input type="hidden" name="ParentCommentId" value="@comment.Id" />
+                                    <div class="form-group">
+                                        <textarea id="replyEditor@comment.Id" name="Content" class="form-control tinymce-editor" rows="2" required></textarea>
+                                    </div>
+                                    
+                                    <!-- File Uploads for Reply -->
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
+                                        <input type="file" name="ImageFile" accept="image/*" class="form-control form-control-sm" title="Ảnh" />
+                                        <input type="file" name="VideoFile" accept="video/*" class="form-control form-control-sm" title="Video" />
+                                    </div>
+                                    
+                                    <div style="display: flex; gap: 8px;">
+                                        <button type="submit" class="btn btn-primary btn-sm">
+                                            <i class="fas fa-reply"></i> Reply
+                                        </button>
+                                        <button type="button" onclick="showReplyForm(@comment.Id)" class="btn btn-outline btn-sm">
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        }
+
+                        <!-- Replies -->
+                        @foreach (var reply in comment.Replies.Where(r => !r.IsDeleted).OrderBy(r => r.CreatedAt))
+                        {
+                            <div class="comment reply">
+                                <div class="comment-header">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        @if (!string.IsNullOrEmpty(reply.User.Avatar))
+                                        {
+                                            <img src="@reply.User.Avatar" alt="Avatar" style="width: 28px; height: 28px; border-radius: 50%; object-fit: cover;" />
+                                        }
+                                        else
+                                        {
+                                            <div style="width: 28px; height: 28px; border-radius: 50%; background-color: var(--primary-color); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 0.8rem;">
+                                                @((reply.User.DisplayName ?? reply.User.UserName)?.Substring(0, 1).ToUpper())
+                                            </div>
+                                        }
+                                        <div>
+                                            <span class="comment-author">
+                                                <a asp-controller="User" asp-action="Profile" asp-route-id="@reply.UserId">
+                                                    @(reply.User.DisplayName ?? reply.User.UserName)
+                                                </a>
+                                            </span>
+                                            <span class="comment-date">@reply.CreatedAt.ToString("MMM dd, yyyy 'at' HH:mm")</span>
+                                            @if (reply.UpdatedAt.HasValue)
+                                            {
+                                                <span class="comment-date">(edited)</span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div style="margin-bottom: 12px;">
+                                    @Html.Raw(reply.Content.Replace("\n", "<br>"))
+                                </div>
+                                
+                                @* Display Image if exists *@
+                                @if (!string.IsNullOrEmpty(reply.ImagePath))
+                                {
+                                    <div style="margin-bottom: 12px;">
+                                        <img src="@reply.ImagePath" alt="Ảnh trả lời" 
+                                             style="max-width: 100%; height: auto; border-radius: 8px; max-height: 300px; cursor: pointer;"
+                                             onclick="openImageModal('@reply.ImagePath')" />
+                                    </div>
+                                }
+                                
+                                @* Display Video if exists *@
+                                @if (!string.IsNullOrEmpty(reply.VideoPath))
+                                {
+                                    <div style="margin-bottom: 12px;">
+                                        <video controls style="max-width: 100%; height: auto; border-radius: 8px; max-height: 300px;">
+                                            <source src="@reply.VideoPath" type="video/mp4">
+                                            <source src="@reply.VideoPath" type="video/webm">
+                                            <source src="@reply.VideoPath" type="video/ogg">
+                                            Trình duyệt của bạn không hỗ trợ video HTML5.
+                                        </video>
+                                    </div>
+                                }
+
+                                <div class="comment-actions">
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        <button id="comment-like-@reply.Id" onclick="toggleLike('Comment', @reply.Id)" 
+                                                class="btn btn-outline btn-sm @(reply.CommentLikes.Any(cl => cl.UserId == ViewContext.HttpContext.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value) ? "liked" : "")">
+                                            <i class="@(reply.CommentLikes.Any(cl => cl.UserId == ViewContext.HttpContext.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value) ? "fas" : "far") fa-heart"></i>
+                                            <span class="like-count">@reply.CommentLikes.Count</span>
+                                        </button>
+                                    }
+
+                                    @if (User.Identity.IsAuthenticated && (reply.UserId == ViewContext.HttpContext.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value || User.IsInRole("Admin") || User.IsInRole("Moderator")))
+                                    {
+                                        <a asp-controller="Comment" asp-action="Edit" asp-route-id="@reply.Id" class="btn btn-outline btn-sm">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </a>
+                                        
+                                        <form asp-controller="Comment" asp-action="Delete" asp-route-id="@reply.Id" method="post" style="display: inline;" 
+                                              onsubmit="return confirm('Are you sure you want to delete this reply?')">
+                                            <button type="submit" class="btn btn-outline btn-sm" style="color: var(--danger-color); border-color: var(--danger-color);">
+                                                <i class="fas fa-trash"></i> Delete
+                                            </button>
+                                        </form>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+
+                @if (!Model.Comments.Any(c => !c.IsDeleted))
+                {
+                    <div class="text-center" style="padding: 32px;">
+                        <i class="fas fa-comments" style="font-size: 2rem; color: var(--text-muted); margin-bottom: 16px;"></i>
+                        <p class="text-muted">No comments yet. Be the first to share your thoughts!</p>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Post Info</h3>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <div class="stat-item">
+                        <i class="fas fa-eye"></i>
+                        <span>@Model.Views views</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-heart"></i>
+                        <span>@Model.PostLikes.Count likes</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-comment"></i>
+                        <span>@Model.Comments.Count(c => !c.IsDeleted) comments</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-calendar"></i>
+                        <span>@Model.CreatedAt.ToString("MMM dd, yyyy")</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Author</h3>
+                <div>
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                        @if (!string.IsNullOrEmpty(Model.User.Avatar))
+                        {
+                            <img src="@Model.User.Avatar" alt="Avatar" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;" />
+                        }
+                        else
+                        {
+                            <div style="width: 40px; height: 40px; border-radius: 50%; background-color: var(--primary-color); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
+                                @((Model.User.DisplayName ?? Model.User.UserName)?.Substring(0, 1).ToUpper())
+                            </div>
+                        }
+                        <div>
+                            <div style="font-weight: 500;">
+                                <a asp-controller="User" asp-action="Profile" asp-route-id="@Model.UserId">
+                                    @(Model.User.DisplayName ?? Model.User.UserName)
+                                </a>
+                            </div>
+                            <div class="text-muted" style="font-size: 0.75rem;">
+                                Member since @Model.User.JoinDate.ToString("MMM yyyy")
+                            </div>
+                        </div>
+                    </div>
+                    @if (!string.IsNullOrEmpty(Model.User.Bio))
+                    {
+                        <p style="font-size: 0.875rem; color: var(--text-muted);">@Model.User.Bio</p>
+                    }
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Actions</h3>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <a asp-action="Index" class="btn btn-outline btn-sm">
+                        <i class="fas fa-arrow-left"></i> Back to Posts
+                    </a>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a asp-action="Create" class="btn btn-primary btn-sm">
+                            <i class="fas fa-plus"></i> New Post
+                        </a>
+                    }
+                </div>
+            </div>
+        </aside>
+    </div>
+</div>
+
+@section Scripts {
+    <style>
+        .liked {
+            color: var(--danger-color) !important;
+            border-color: var(--danger-color) !important;
+        }
+        
+        @@media (max-width: 768px) {
+            .container > div {
+                grid-template-columns: 1fr !important;
+            }
+            
+            .sidebar {
+                order: -1;
+                position: static;
+            }
+        }
+        
+        /* Image modal styles */
+        .image-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+        
+        .image-modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 90%;
+            max-height: 90%;
+        }
+        
+        .image-modal-close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .image-modal-close:hover {
+            color: #bbb;
+        }
+    </style>
+    
+    <!-- TinyMCE CDN -->
+    <script src="https://cdn.tiny.cloud/1/fexcl22si4of5zrbkeb9lqyq4apal4k79p3n2b2p2osbkxgt/tinymce/7/tinymce.min.js"></script>
+    
+    <script>
+        // Initialize TinyMCE for all comment editors
+        tinymce.init({
+            selector: '.tinymce-editor',
+            plugins: 'link image code lists formatting',
+            toolbar: 'undo redo | formatselect | bold italic underline | alignleft aligncenter alignright | bullist numlist | link image | code',
+            menubar: false,
+            height: 250,
+            setup: function(editor) {
+                editor.on('change', function() {
+                    editor.save();
+                });
+            }
+        });
+        
+        function showReplyForm(commentId) {
+            var replyForm = document.getElementById('reply-form-' + commentId);
+            if (replyForm) {
+                replyForm.style.display = replyForm.style.display === 'none' ? 'block' : 'none';
+            }
+        }
+        
+
+
+        function showReportModal(type, id) {
+            const modal = document.getElementById('reportModal');
+            document.getElementById('reportType').value = type;
+            document.getElementById('reportId').value = id;
+            modal.style.display = 'block';
+        }
+
+        function closeReportModal() {
+            const modal = document.getElementById('reportModal');
+            modal.style.display = 'none';
+        }
+
+        function submitReport() {
+            const reason = document.getElementById('reportReason').value;
+            const description = document.getElementById('reportDescription').value;
+            const type = document.getElementById('reportType').value;
+            const id = document.getElementById('reportId').value;
+
+            if (!reason) {
+                alert('Vui lòng chọn lý do report');
+                return;
+            }
+
+            fetch(`@Url.Action("Post", "Report")?id=${id}&reason=${reason}&description=${encodeURIComponent(description)}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]')?.value || ''
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                closeReportModal();
+            })
+            .catch(error => {
+                alert('Lỗi: ' + error.message);
+            });
+        }
+        
+        function openImageModal(imageSrc) {
+            document.getElementById('imageModal').style.display = 'block';
+            document.getElementById('modalImage').src = imageSrc;
+        }
+        
+        function closeImageModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+        
+        // Close modal when clicking outside of image
+        window.onclick = function(event) {
+            var modal = document.getElementById('imageModal');
+            if (event.target == modal) {
+                closeImageModal();
+            }
+        }
+    </script>
+}
+
+<!-- Image Modal -->
+<div id="imageModal" class="image-modal">
+    <span class="image-modal-close" onclick="closeImageModal()">&times;</span>
+    <img id="modalImage" class="image-modal-content" />
+</div>
+
+<!-- Report Modal -->
+<div id="reportModal" class="modal" style="display:none; position: fixed; z-index: 1001; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.4);">
+    <div class="modal-content" style="background-color: #fefefe; margin: auto; padding: 20px; border: 1px solid #888; border-radius: 8px; width: 90%; max-width: 500px; top: 50%; transform: translateY(-50%); position: relative;">
+        <span class="close" onclick="closeReportModal()" style="color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer;">&times;</span>
+        <h2 style="margin-top: 0;">Report Bài Viết</h2>
+        
+        <div class="form-group" style="margin-bottom: 15px;">
+            <label for="reportReason" style="display: block; margin-bottom: 5px; font-weight: bold;">Lý Do Report <span style="color: red;">*</span></label>
+            <select id="reportReason" class="form-select" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                <option value="">-- Chọn lý do --</option>
+                <option value="0">Nội dung phản cảm</option>
+                <option value="1">Bạo lực</option>
+                <option value="2">Nội dung phản động</option>
+                <option value="3">Vi phạm pháp luật</option>
+                <option value="4">Spam</option>
+                <option value="5">Quấy rối</option>
+                <option value="6">Vi phạm bản quyền</option>
+                <option value="7">Khác</option>
+            </select>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 15px;">
+            <label for="reportDescription" style="display: block; margin-bottom: 5px; font-weight: bold;">Mô Tả Chi Tiết (Tùy Chọn)</label>
+            <textarea id="reportDescription" class="form-control" rows="4" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-family: inherit;" placeholder="Cung cấp thêm chi tiết về vấn đề..."></textarea>
+        </div>
+
+        <input type="hidden" id="reportType" />
+        <input type="hidden" id="reportId" />
+
+        <div style="text-align: right;">
+            <button type="button" onclick="closeReportModal()" class="btn btn-secondary" style="margin-right: 10px; padding: 8px 16px; background-color: #6c757d; color: white; border: none; border-radius: 4px; cursor: pointer;">Hủy</button>
+            <button type="button" onclick="submitReport()" class="btn btn-danger" style="padding: 8px 16px; background-color: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">Gửi Report</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openImageModal(imageSrc) {
+        document.getElementById('imageModal').style.display = 'block';
+        document.getElementById('modalImage').src = imageSrc;
+    }
+    
+    function closeImageModal() {
+        document.getElementById('imageModal').style.display = 'none';
+    }
+    
+    // Close modal when clicking outside of image
+    window.onclick = function(event) {
+        var modal = document.getElementById('imageModal');
+        if (event.target == modal) {
+            closeImageModal();
+        }
+    }
+</script>

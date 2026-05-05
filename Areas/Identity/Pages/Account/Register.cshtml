@@ -1,0 +1,170 @@
+@page
+@using WebApplication1.Areas.Identity.Pages.Account
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="auth-wrapper">
+    <div class="auth-container-new">
+        <div class="auth-card-new">
+            <!-- Header Section -->
+            <div class="auth-header">
+                <div class="auth-logo">
+                    <i class="fas fa-user-plus"></i>
+                </div>
+                <h1 class="auth-title-new">Create Account</h1>
+                <p class="auth-subtitle">Join our community and start sharing your ideas</p>
+            </div>
+
+            <!-- Error Messages -->
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="fas fa-exclamation-circle"></i>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
+            <!-- Registration Form -->
+            <form id="registerForm" method="post" class="auth-form">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />
+                <!-- Email Field -->
+                <div class="form-group-new">
+                    <label asp-for="Input.Email" class="form-label-new">
+                        <i class="fas fa-envelope"></i> Email Address
+                    </label>
+                    <input asp-for="Input.Email" 
+                           class="form-control-new" 
+                           autocomplete="email" 
+                           placeholder="you@example.com"
+                           required />
+                    <span asp-validation-for="Input.Email" class="form-error"></span>
+                </div>
+
+                <!-- Username Field -->
+                <div class="form-group-new">
+                    <label asp-for="Input.UserName" class="form-label-new">
+                        <i class="fas fa-user"></i> Username
+                    </label>
+                    <input asp-for="Input.UserName" 
+                           class="form-control-new" 
+                           autocomplete="username" 
+                           placeholder="Choose a unique username"
+                           required />
+                    <span asp-validation-for="Input.UserName" class="form-error"></span>
+                </div>
+
+                <!-- Password Field -->
+                <div class="form-group-new">
+                    <label asp-for="Input.Password" class="form-label-new">
+                        <i class="fas fa-lock"></i> Password
+                    </label>
+                    <div class="password-input-wrapper">
+                        <input asp-for="Input.Password" 
+                               class="form-control-new" 
+                               autocomplete="new-password" 
+                               placeholder="Create a strong password (min. 8 characters)"
+                               id="passwordInput"
+                               required />
+                        <button type="button" class="password-toggle" onclick="togglePassword('passwordInput')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <span asp-validation-for="Input.Password" class="form-error"></span>
+                    <div class="password-hint">
+                        <small>Must be at least 8 characters and include numbers</small>
+                    </div>
+                </div>
+
+                <!-- Confirm Password Field -->
+                <div class="form-group-new">
+                    <label asp-for="Input.ConfirmPassword" class="form-label-new">
+                        <i class="fas fa-lock"></i> Confirm Password
+                    </label>
+                    <div class="password-input-wrapper">
+                        <input asp-for="Input.ConfirmPassword" 
+                               class="form-control-new" 
+                               autocomplete="new-password" 
+                               placeholder="Confirm your password"
+                               id="confirmPasswordInput"
+                               required />
+                        <button type="button" class="password-toggle" onclick="togglePassword('confirmPasswordInput')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <span asp-validation-for="Input.ConfirmPassword" class="form-error"></span>
+                </div>
+
+                <!-- Submit Button -->
+                <button id="registerSubmit" type="submit" class="btn-submit-new">
+                    <i class="fas fa-user-plus"></i> Create Account
+                </button>
+            </form>
+
+            <!-- Divider -->
+            <div class="auth-divider">
+                <span>Already have an account?</span>
+            </div>
+
+            <!-- Login Link -->
+            <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl" class="btn-register-new btn-register-secondary">
+                <i class="fas fa-sign-in-alt"></i> Sign In
+            </a>
+        </div>
+
+        <!-- Illustration Section -->
+        <div class="auth-illustration">
+            <div class="illustration-content">
+                <i class="fas fa-comments"></i>
+                <h2>Forum Discussion</h2>
+                <p>Join thousands of users sharing knowledge and ideas.</p>
+                <div class="features-list">
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Free to join</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>No credit card needed</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Active community</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            const button = event.target.closest('.password-toggle');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                button.innerHTML = '<i class="fas fa-eye-slash"></i>';
+            } else {
+                input.type = 'password';
+                button.innerHTML = '<i class="fas fa-eye"></i>';
+            }
+        }
+
+        // Add active class to form fields when they have focus or value
+        document.querySelectorAll('.form-control-new').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.classList.add('focused');
+            });
+            input.addEventListener('blur', function() {
+                if (!this.value) {
+                    this.parentElement.classList.remove('focused');
+                }
+            });
+            if (input.value) {
+                input.parentElement.classList.add('focused');
+            }
+        });
+    </script>
+}

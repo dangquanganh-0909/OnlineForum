@@ -1,0 +1,314 @@
+@model WebApplication1.Models.Report
+@{
+    ViewData["Title"] = "Chi Tiết Report";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- Report Information Card -->
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-flag"></i> Report #@Model.Id
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <h6 class="text-muted">Lý Do Report</h6>
+                            @{
+                                var reasonText = Model.Reason switch
+                                {
+                                    WebApplication1.Models.ReportReason.OffensiveContent => "Nội dung phản cảm",
+                                    WebApplication1.Models.ReportReason.Violence => "Bạo lực",
+                                    WebApplication1.Models.ReportReason.SubversiveContent => "Nội dung phản động",
+                                    WebApplication1.Models.ReportReason.IllegalContent => "Vi phạm pháp luật",
+                                    WebApplication1.Models.ReportReason.Spam => "Spam",
+                                    WebApplication1.Models.ReportReason.Harassment => "Quấy rối",
+                                    WebApplication1.Models.ReportReason.Copyright => "Vi phạm bản quyền",
+                                    _ => "Khác"
+                                };
+                            }
+                            <p class="mb-0">
+                                <span class="badge bg-warning">@reasonText</span>
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="text-muted">Trạng Thái</h6>
+                            <p class="mb-0">
+                                @switch(Model.Status)
+                                {
+                                    case WebApplication1.Models.ReportStatus.Pending:
+                                        <span class="badge bg-danger">Chờ xử lý</span>
+                                        break;
+                                    case WebApplication1.Models.ReportStatus.Reviewed:
+                                        <span class="badge bg-info">Đã xem</span>
+                                        break;
+                                    case WebApplication1.Models.ReportStatus.Resolved:
+                                        <span class="badge bg-success">Đã xử lý</span>
+                                        break;
+                                }
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <h6 class="text-muted">Người Report</h6>
+                            @if (Model.User != null)
+                            {
+                                <a href="@Url.Action("Profile", "User", new { id = Model.UserId })">
+                                    @(Model.User.DisplayName ?? Model.User.UserName)
+                                </a>
+                            }
+                            else
+                            {
+                                <span class="text-muted">Người dùng đã xóa</span>
+                            }
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="text-muted">Ngày Report</h6>
+                            <p class="mb-0">@Model.CreatedAt.ToString("dd/MM/yyyy HH:mm:ss")</p>
+                        </div>
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(Model.Description))
+                    {
+                        <div class="mb-3">
+                            <h6 class="text-muted">Mô Tả Chi Tiết</h6>
+                            <p class="mb-0 p-3 bg-light rounded">@Model.Description</p>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Posted Content Card -->
+            @if (Model.Post != null)
+            {
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">
+                            <i class="bi bi-file-text"></i> Bài Viết Bị Report
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <h6 class="text-muted">Tiêu Đề</h6>
+                        <h4 class="mb-3">@Model.Post.Title</h4>
+
+                        <h6 class="text-muted">Danh Mục</h6>
+                        <p class="mb-3">
+                            <span class="badge bg-secondary">@Model.Post.SubCategory?.Name</span>
+                        </p>
+
+                        <h6 class="text-muted">Tác Giả</h6>
+                        <p class="mb-3">
+                            @if (Model.Post.User != null)
+                            {
+                                <a href="@Url.Action("Profile", "User", new { id = Model.Post.UserId })">
+                                    @(Model.Post.User.DisplayName ?? Model.Post.User.UserName)
+                                </a>
+                            }
+                            else
+                            {
+                                <span class="text-muted">Người dùng đã xóa</span>
+                            }
+                        </p>
+
+                        <h6 class="text-muted">Nội Dung</h6>
+                        <div class="p-3 bg-light rounded mb-3">
+                            @Html.Raw(Model.Post.Content)
+                        </div>
+
+                        @if (!string.IsNullOrEmpty(Model.Post.ImagePath))
+                        {
+                            <h6 class="text-muted">Hình Ảnh</h6>
+                            <img src="@Model.Post.ImagePath" alt="Post Image" class="img-fluid rounded mb-3" style="max-width: 400px;">
+                        }
+
+                        <div class="text-muted small">
+                            <p class="mb-1">
+                                <i class="bi bi-calendar"></i> Tạo: @Model.Post.CreatedAt.ToString("dd/MM/yyyy HH:mm")
+                            </p>
+                            @if (Model.Post.UpdatedAt.HasValue)
+                            {
+                                <p class="mb-1">
+                                    <i class="bi bi-pencil"></i> Cập nhật: @Model.Post.UpdatedAt.Value.ToString("dd/MM/yyyy HH:mm")
+                                </p>
+                            }
+                            <p class="mb-0">
+                                <i class="bi bi-eye"></i> Lượt xem: @Model.Post.Views
+                            </p>
+                        </div>
+
+                        <div class="mt-3">
+                            <a href="@Url.Action("Details", "Post", new { id = Model.Post.Id })" class="btn btn-primary" target="_blank">
+                                <i class="bi bi-link-45deg"></i> Xem Bài Viết
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <!-- Actions Sidebar -->
+        <div class="col-lg-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-dark text-white">
+                    <h6 class="mb-0">Hành Động</h6>
+                </div>
+                <div class="card-body">
+                    @if (Model.Status != WebApplication1.Models.ReportStatus.Resolved)
+                    {
+                        <button type="button" class="btn btn-success w-100 mb-2" onclick="resolveReport(@Model.Id)">
+                            <i class="bi bi-check-circle"></i> Đánh Dấu Đã Xử Lý
+                        </button>
+                    }
+
+                    @if (Model.Post?.UserId != null)
+                    {
+                        <button type="button" class="btn btn-danger w-100 mb-2" data-bs-toggle="modal" data-bs-target="#lockUserModal" data-user-id="@Model.Post.UserId">
+                            <i class="bi bi-lock"></i> Khóa Tài Khoản Tác Giả
+                        </button>
+
+                        <button type="button" class="btn btn-warning w-100" data-bs-toggle="modal" data-bs-target="#deletePostModal">
+                            <i class="bi bi-trash"></i> Xóa Bài Viết
+                        </button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Lock User Modal -->
+<div class="modal fade" id="lockUserModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title">Khóa Tài Khoản Tác Giả</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn chắc chắn muốn khóa tài khoản của tác giả bài viết này?</p>
+                <div class="mb-3">
+                    <label for="lockReason" class="form-label">Lý Do Khóa</label>
+                    <textarea class="form-control" id="lockReason" rows="3" placeholder="Nhập lý do khóa tài khoản..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-danger" onclick="lockUserAccount()">Khóa Tài Khoản</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Post Modal -->
+<div class="modal fade" id="deletePostModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title">Xóa Bài Viết</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn chắc chắn muốn xóa bài viết này? Hành động này không thể hoàn tác.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-danger" onclick="deletePost()">Xóa Bài Viết</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        let currentUserId = null;
+
+        document.getElementById('lockUserModal').addEventListener('show.bs.modal', function(event) {
+            const button = event.relatedTarget;
+            currentUserId = button.getAttribute('data-user-id');
+        });
+
+        function lockUserAccount() {
+            const reason = document.getElementById('lockReason').value;
+            
+            if (!reason) {
+                alert('Vui lòng nhập lý do khóa tài khoản');
+                return;
+            }
+
+            fetch('@Url.Action("LockUserAccount", "CategoryAdmin")', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    userId: currentUserId,
+                    reason: reason
+                })
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message);
+                    bootstrap.Modal.getInstance(document.getElementById('lockUserModal')).hide();
+                    location.reload();
+                } else {
+                    alert('Lỗi: ' + data.message);
+                }
+            })
+            .catch(error => alert('Lỗi: ' + error.message));
+        }
+
+        function deletePost() {
+            const postId = @Model.Post?.Id ?? 0;
+            
+            if (postId === 0) {
+                alert('Không thể xác định bài viết');
+                return;
+            }
+
+            fetch('@Url.Action("Delete", "Post")?id=' + postId, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Bài viết đã được xóa');
+                    bootstrap.Modal.getInstance(document.getElementById('deletePostModal')).hide();
+                    location.reload();
+                } else {
+                    alert('Lỗi: ' + data.message);
+                }
+            })
+            .catch(error => alert('Lỗi: ' + error.message));
+        }
+
+        function resolveReport(reportId) {
+            if (confirm('Bạn chắc chắn muốn đánh dấu report này là đã xử lý?')) {
+                fetch('@Url.Action("ResolveReport", "Report")?id=' + reportId, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                })
+                .then(r => r.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message);
+                        location.reload();
+                    } else {
+                        alert('Lỗi: ' + data.message);
+                    }
+                })
+                .catch(error => alert('Lỗi: ' + error.message));
+            }
+        }
+    </script>
+}

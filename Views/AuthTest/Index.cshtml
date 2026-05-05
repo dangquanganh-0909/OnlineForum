@@ -1,0 +1,70 @@
+@{
+    ViewData["Title"] = "Auth Test";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Authentication Test</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Authentication Test Page</h2>
+        
+        <div class="alert alert-info">
+            <strong>Current URL:</strong> <span id="currentUrl"></span><br>
+            <strong>User Authenticated:</strong> @(User.Identity?.IsAuthenticated == true ? "Yes" : "No")
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h4>Test Authentication Links</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>Direct Links:</h5>
+                        <p><a href="/Identity/Account/Register" class="btn btn-primary btn-block">Direct Register</a></p>
+                        <p><a href="/Identity/Account/Login" class="btn btn-success btn-block">Direct Login</a></p>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Controller Redirects:</h5>
+                        <p><a href="/AuthTest/DirectRegister" class="btn btn-primary btn-block">Controller Register</a></p>
+                        <p><a href="/AuthTest/DirectLogin" class="btn btn-success btn-block">Controller Login</a></p>
+                    </div>
+                </div>
+                
+                <hr>
+                
+                <h5>Other Pages:</h5>
+                <p><a href="/Welcome" class="btn btn-secondary">Welcome Page</a></p>
+                <p><a href="/Debug" class="btn btn-info">Debug Page</a></p>
+                <p><a href="/Post" class="btn btn-warning">Post Page (Requires Auth)</a></p>
+            </div>
+        </div>
+        
+        <div class="mt-4">
+            <h4>Instructions:</h4>
+            <ol>
+                <li>Try clicking "Direct Register" - should go to registration page</li>
+                <li>Try clicking "Direct Login" - should go to login page</li>
+                <li>If direct links don't work, try controller redirects</li>
+                <li>Check browser console for any errors</li>
+            </ol>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('currentUrl').textContent = window.location.href;
+        
+        // Test if links are working
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Page loaded successfully');
+            console.log('Current URL:', window.location.href);
+            console.log('User authenticated:', '@(User.Identity?.IsAuthenticated == true ? "true" : "false")');
+        });
+    </script>
+</body>
+</html>

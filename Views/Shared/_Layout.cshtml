@@ -1,0 +1,168 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Forum Discussion</title>
+    <link rel="stylesheet" href="~/css/forum.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    @Html.AntiForgeryToken()
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-content">
+                <a class="navbar-brand" asp-controller="Post" asp-action="Index">
+                    <i class="fas fa-comments"></i> Diễn Đàn Thảo Luận
+                </a>
+                
+                <button class="navbar-toggle" onclick="toggleNavbar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <ul class="navbar-nav" id="navbarNav">
+                    
+                    <li><a class="nav-link" asp-controller="Post" asp-action="Index">
+                        <i class="fas fa-home"></i> Trang Chủ
+                    </a></li>
+                    
+                    @if (User.Identity!.IsAuthenticated)
+                    {
+                        <li><a class="nav-link" asp-controller="Post" asp-action="Create">
+                            <i class="fas fa-plus"></i> Tạo Bài Viết
+                        </a></li>
+                        <li><a class="nav-link" asp-controller="User" asp-action="Profile">
+                            <i class="fas fa-user"></i> Hồ Sơ
+                        </a></li>
+                        <li><a class="nav-link" asp-controller="User" asp-action="Notifications">
+                            <i class="fas fa-bell"></i> Thông Báo
+                        </a></li>
+                        @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+                        {
+                            <li><a class="nav-link" asp-controller="Report" asp-action="Manage">
+                                <i class="fas fa-flag"></i> Báo Cáo
+                            </a></li>
+                        }
+                        @if (User.IsInRole("Administrator") || User.IsInRole("Admin"))
+                        {
+                            <li><a class="nav-link" asp-controller="CategoryAdmin" asp-action="ManageUsers">
+                                <i class="fas fa-users"></i> Quản Lý Người Dùng
+                            </a></li>
+                            <li><a class="nav-link" asp-controller="CategoryAdmin" asp-action="LockedUsers">
+                                <i class="fas fa-lock"></i> Tài Khoản Khóa
+                            </a></li>
+                        }
+                        @if (User.IsInRole("Administrator"))
+                        {
+                            <li><a class="nav-link" asp-controller="CategoryAdmin" asp-action="Index">
+                                <i class="fas fa-crown"></i> Quản Lý Admin
+                            </a></li>
+                        }
+                        <li>
+                            <a class="nav-link" href="@Url.Action("LogoutGet", "SimpleAuth")" style="cursor: pointer;">
+                                <i class="fas fa-sign-out-alt"></i> Đăng Xuất
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li><a class="nav-link" asp-controller="SimpleAuth" asp-action="Login">
+                            <i class="fas fa-sign-in-alt"></i> Đăng Nhập
+                        </a></li>
+                        <li><a class="nav-link" asp-controller="SimpleAuth" asp-action="Register">
+                            <i class="fas fa-user-plus"></i> Đăng Ký
+                        </a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        @RenderBody()
+    </main>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script>
+        function toggleLike(type, id) {
+            console.log('🔥 toggleLike called with type=' + type + ', id=' + id);
+            
+            const selector = '#' + type.toLowerCase() + '-like-' + id;
+            const button = $(selector);
+            
+            console.log('Button found:', button.length > 0);
+            
+            if (button.length === 0) {
+                console.error('Button not found with selector:', selector);
+                return;
+            }
+            
+            const token = $('input[name="__RequestVerificationToken"]').val();
+            console.log('Token found:', !!token);
+            
+            if (!token) {
+                alert('Lỗi: Token xác thực không tìm thấy');
+                return;
+            }
+            
+            $.ajax({
+                url: '/' + type + '/Like/' + id,
+                type: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': token
+                },
+                success: function(data) {
+                    console.log('✅ Like response:', data);
+                    if (data && data.success) {
+                        const icon = button.find('i');
+                        const count = button.find('.like-count');
+                        const isLiked = button.hasClass('liked');
+                        
+                        if (isLiked) {
+                            button.removeClass('liked');
+                            icon.removeClass('fas').addClass('far');
+                        } else {
+                            button.addClass('liked');
+                            icon.removeClass('far').addClass('fas');
+                        }
+                        
+                        if (count.length > 0) {
+                            count.text(data.likeCount);
+                        }
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('❌ Like error:', { status: xhr.status, error: error });
+                    alert('Lỗi: ' + xhr.statusText);
+                }
+            });
+        }
+        
+        function toggleNavbar() {
+            const nav = document.getElementById('navbarNav');
+            nav.classList.toggle('show');
+        }
+
+        // Report functionality
+        function showReportModal(type, id) {
+            const reason = prompt('Vui lòng chọn lý do báo cáo:\n1. Spam\n2. Quấy rối\n3. Nội dung không phù hợp\n4. Vi phạm bản quyền\n5. Khác\n\nNhập số (1-5):');
+            if (reason && reason >= 1 && reason <= 5) {
+                const reasons = ['Spam', 'Harassment', 'InappropriateContent', 'Copyright', 'Other'];
+                const description = prompt('Chi tiết bổ sung (tùy chọn):');
+                
+                $.post(`/Report/${type}/${id}`, {
+                    reason: reason - 1,
+                    description: description
+                }, function(data) {
+                    if (data.success) {
+                        alert('Báo cáo đã được gửi thành công. Cảm ơn bạn đã giúp giữ cộng đồng an toàn.');
+                    }
+                });
+            }
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

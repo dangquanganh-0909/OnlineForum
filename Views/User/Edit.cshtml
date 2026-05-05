@@ -1,0 +1,124 @@
+@model WebApplication1.ViewModels.EditProfileViewModel
+@{
+    ViewData["Title"] = "Chỉnh Sửa Hồ Sơ";
+}
+
+<div class="container" style="margin-top: 24px;">
+    <div style="max-width: 600px; margin: 0 auto;">
+        <div class="card">
+            <div class="card-header">
+                <h1 class="card-title">
+                    <i class="fas fa-user-edit"></i> Chỉnh Sửa Hồ Sơ
+                </h1>
+                <p class="card-subtitle">Cập nhật thông tin cá nhân của bạn</p>
+            </div>
+
+            <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="invalid-feedback" style="display: block;"></div>
+                
+                <div class="form-group">
+                    <label asp-for="DisplayName" class="form-label">Tên Hiển Thị</label>
+                    <input asp-for="DisplayName" class="form-control" />
+                    <span asp-validation-for="DisplayName" class="invalid-feedback"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Email" class="form-label">Email</label>
+                    <input asp-for="Email" class="form-control" type="email" />
+                    <span asp-validation-for="Email" class="invalid-feedback"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Bio" class="form-label">Bio</label>
+                    <textarea asp-for="Bio" class="form-control" rows="4" 
+                              placeholder="Tell others about yourself..."></textarea>
+                    <span asp-validation-for="Bio" class="invalid-feedback"></span>
+                    <small class="text-muted">Maximum 500 characters</small>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Ảnh Đại Diện</label>
+                    <input type="file" name="avatar" class="form-control" accept="image/*" />
+                    <small class="text-muted">
+                        Tải lên ảnh đại diện (JPG, PNG, GIF). Kích thước tối đa: 2MB.
+                    </small>
+                </div>
+
+                <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 24px;">
+                    <a asp-action="Profile" class="btn btn-outline">
+                        <i class="fas fa-times"></i> Hủy
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Lưu Thay Đổi
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Mẹo Hồ Sơ -->
+        <div class="card" style="margin-top: 24px;">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-lightbulb"></i> Mẹo Hồ Sơ
+                </h3>
+            </div>
+            <div>
+                <ul style="margin: 0; padding-left: 20px;">
+                    <li>Sử dụng tên hiển thị rõ ràng, dễ nhận biết</li>
+                    <li>Thêm tiểu sử để giúp người khác hiểu sở thích của bạn</li>
+                    <li>Tải lên ảnh đại diện để làm cho bài viết của bạn cá nhân hóa hơn</li>
+                    <li>Cập nhật email để nhận thông báo quan trọng</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script>
+        // Character counter for bio
+        const bioTextarea = document.querySelector('textarea[name="Bio"]');
+        if (bioTextarea) {
+            const maxLength = 500;
+            const counter = document.createElement('div');
+            counter.style.cssText = 'font-size: 0.75rem; color: var(--text-muted); text-align: right; margin-top: 4px;';
+            
+            function updateCounter() {
+                const remaining = maxLength - bioTextarea.value.length;
+                counter.textContent = `${remaining} characters remaining`;
+                counter.style.color = remaining < 50 ? 'var(--warning-color)' : 'var(--text-muted)';
+            }
+            
+            bioTextarea.parentNode.insertBefore(counter, bioTextarea.nextSibling.nextSibling);
+            updateCounter();
+            
+            bioTextarea.addEventListener('input', updateCounter);
+        }
+
+        // Avatar preview
+        const avatarInput = document.querySelector('input[name="avatar"]');
+        if (avatarInput) {
+            avatarInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    // Check file size (2MB limit)
+                    if (file.size > 2 * 1024 * 1024) {
+                        alert('File size must be less than 2MB');
+                        this.value = '';
+                        return;
+                    }
+                    
+                    // Check file type
+                    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                    if (!allowedTypes.includes(file.type)) {
+                        alert('Please upload a valid image file (JPG, PNG, GIF)');
+                        this.value = '';
+                        return;
+                    }
+                }
+            });
+        }
+    </script>
+}

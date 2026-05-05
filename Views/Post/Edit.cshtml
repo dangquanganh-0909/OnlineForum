@@ -1,0 +1,90 @@
+@model WebApplication1.ViewModels.CreatePostViewModel
+@{
+    ViewData["Title"] = "Edit Post";
+}
+
+<div class="container" style="margin-top: 24px;">
+    <div style="max-width: 800px; margin: 0 auto;">
+        <div class="card">
+            <div class="card-header">
+                <h1 class="card-title">
+                    <i class="fas fa-edit"></i> Edit Post
+                </h1>
+                <p class="card-subtitle">Update your post content</p>
+            </div>
+
+            <form asp-action="Edit" method="post">
+                <div asp-validation-summary="ModelOnly" class="invalid-feedback" style="display: block;"></div>
+                
+                <div class="form-group">
+                    <label asp-for="Title" class="form-label">Title</label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="invalid-feedback"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="CategoryId" class="form-label">Category</label>
+                    <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId">
+                        <option value="">Select a category</option>
+                    </select>
+                    <span asp-validation-for="CategoryId" class="invalid-feedback"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Content" class="form-label">Content</label>
+                    <textarea asp-for="Content" class="form-control" rows="12"></textarea>
+                    <span asp-validation-for="Content" class="invalid-feedback"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Tags" class="form-label">Tags</label>
+                    <input asp-for="Tags" class="form-control" />
+                    <span asp-validation-for="Tags" class="invalid-feedback"></span>
+                    <small class="text-muted">
+                        Tags help others find your post. Use relevant keywords separated by commas.
+                    </small>
+                </div>
+
+                <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 24px;">
+                    <a asp-action="Details" asp-route-id="@ViewContext.RouteData.Values["id"]" class="btn btn-outline">
+                        <i class="fas fa-times"></i> Cancel
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Update Post
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script>
+        // Auto-resize textarea
+        const textarea = document.querySelector('textarea[name="Content"]');
+        if (textarea) {
+            // Set initial height
+            textarea.style.height = (textarea.scrollHeight) + 'px';
+            
+            textarea.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = (this.scrollHeight) + 'px';
+            });
+        }
+
+        // Tag input enhancement
+        const tagInput = document.querySelector('input[name="Tags"]');
+        if (tagInput) {
+            tagInput.addEventListener('blur', function() {
+                const tags = this.value.split(',')
+                    .map(tag => tag.trim().toLowerCase())
+                    .filter(tag => tag.length > 0)
+                    .filter((tag, index, arr) => arr.indexOf(tag) === index);
+                
+                this.value = tags.join(', ');
+            });
+        }
+    </script>
+}

@@ -1,0 +1,22 @@
+@page
+@using WebApplication1.Areas.Identity.Pages.Account
+@model LogoutModel
+@{
+    ViewData["Title"] = "Log out";
+}
+
+<div class="auth-container">
+    <div class="auth-card text-center">
+        <div class="auth-title">
+            <i class="fas fa-sign-out-alt"></i> Logged Out
+        </div>
+        
+        <p>You have successfully logged out of the application.</p>
+        
+        <div style="margin-top: 24px;">
+            <a asp-controller="Post" asp-action="Index" class="btn btn-primary">
+                <i class="fas fa-home"></i> Back to Forum
+            </a>
+        </div>
+    </div>
+</div>
